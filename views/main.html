@@ -1,0 +1,219 @@
+<div>
+    Search for something:
+    <input ng-model="search">
+
+    <table width="100%" ng-show="searchResults">
+        <tr>
+            <td style="vertical-align:top">
+                <table>
+                    <tr style="font-weight:bold;">
+                        <td>Topic</td>
+                        <td>Category</td>
+                    </tr>
+                    <tr ng-repeat="t in searchResults.result">
+                        <td ng-show="t.id">{{$index+1}}. <a ng-click="searchTopic(t.id)">{{t.name}}</a>
+                        </td>
+                        <td ng-hide="t.id">{{$index+1}}. {{t.name}} (no topic)
+                        </td>
+                        <td>
+                            <div title="{{t.notable.id}}">{{t.notable.name}}</div>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+
+            <td style="vertical-align:top; max-width:600px;align:right;" ng-show="details">
+
+                <!-- /type/object/type -->
+                <span style="font-size:0.75em;" ng-repeat="t in details.property['/type/object/type'].values"><a ng-click="searchTopic(t.id)">{{t.text}}</a> /&nbsp;</span>
+
+                <!-- /common/topic/description -->
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">{{details.property['/type/object/name'].values[0].value}}</h3>
+                    </div>
+                    <div class="panel-body">
+                        {{details.property['/common/topic/description'].values[0].value}}
+                    </div>
+                </div>
+
+                <!-- Images -->
+                <div style="margin: 30px;" ng-show="details.property['/common/topic/image']" >
+                    <span ng-repeat="t in details.property['/common/topic/image'].values">
+                        <img style="margin:2px;border:1px #555 solid; padding:2px;" title="{{t.text}}" src="https://usercontent.googleapis.com/freebase/v1/image/{{t.id}}?maxwidth=200&maxheight=200">
+                    </span>
+                    <!-- &mode=fillcropmid -->
+                </div>
+
+                <!-- /film/director/film -->
+                <div class="panel panel-default" ng-show="details.property['/film/director/film']">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Films as director</h3>
+                    </div>
+                    <div class="panel-body">
+                        <ul>
+                            <li ng-repeat="f in details.property['/film/director/film'].values">
+                                <a ng-click="searchTopic(f.id)">{{f.text}}</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- /film/actor/film -->
+                <div class="panel panel-default" ng-show="details.property['/film/actor/film']">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Films as actor</h3>
+                    </div>
+                    <div class="panel-body">
+                        <ul>
+                            <li ng-repeat="f in details.property['/film/actor/film'].values">
+                                <a ng-click="searchTopic(f.property['/film/performance/film'].values[0].id)">{{f.property['/film/performance/film'].values[0].text}}</a> ({{f.property['/film/performance/character'].values[0].text}})
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- /film/film/starring -->
+                <div class="panel panel-default" ng-show="details.property['/film/film/starring']">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Actors</h3>
+                    </div>
+                    <div class="panel-body">
+                        <ul>
+                            <li ng-repeat="f in details.property['/film/film/starring'].values">
+                                <a ng-click="searchTopic(f.property['/film/performance/actor'].values[0].id)">{{f.property['/film/performance/actor'].values[0].text}}</a> ({{f.property['/film/performance/character'].values[0].text}})
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- /book/author/works_written -->
+                <div class="panel panel-default" ng-show="details.property['/book/author/works_written']">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Books as author</h3>
+                    </div>
+                    <div class="panel-body">
+                        <ul>
+                            <li ng-repeat="f in details.property['/book/author/works_written'].values">
+                                <a ng-click="searchTopic(f.id)">{{f.text}}</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- /common/topic/official_website -->
+                <div class="panel panel-default" ng-show="details.property['/common/topic/official_website']">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Websites</h3>
+                    </div>
+                    <div class="panel-body">
+                        <ul>
+                            <li ng-repeat="f in details.property['/common/topic/official_website'].values">
+                                <a href="{{f.text}}">{{f.text}}</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- /music/group_member/membership -->
+                <div class="panel panel-default" ng-show="details.property['/music/group_member/membership']">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Music Groups</h3>
+                    </div>
+                    <div class="panel-body">
+                        <ul>
+                            <li ng-repeat="f in details.property['/music/group_member/membership'].values">
+                                <a ng-click="searchTopic(f.property['/music/group_membership/group'].values[0].id)">{{f.property['/music/group_membership/group'].values[0].text}}</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- /music/musical_group/member -->
+                <div class="panel panel-default" ng-show="details.property['/music/musical_group/member']">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Group Members</h3>
+                    </div>
+                    <div class="panel-body">
+                        <ul>
+                            <li ng-repeat="f in details.property['/music/musical_group/member'].values">
+                                <a ng-click="searchTopic(f.property['/music/group_membership/member'].values[0].id)">{{f.property['/music/group_membership/member'].values[0].text}}</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- /media_common/quotation_subject/quotations_about_this_subject -->
+                <div class="panel panel-default" ng-show="details.property['/media_common/quotation_subject/quotations_about_this_subject']">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Quotations about this subject</h3>
+                    </div>
+                    <div class="panel-body">
+                        <ul>
+                            <li ng-repeat="f in details.property['/media_common/quotation_subject/quotations_about_this_subject'].values">
+                                <a ng-click="searchTopic(f.id)">{{f.text}}</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- /media_common/quotation/author -->
+                <div class="panel panel-default" ng-show="details.property['/media_common/quotation/author']">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Quotation authors</h3>
+                    </div>
+                    <div class="panel-body">
+                        <ul>
+                            <li ng-repeat="f in details.property['/media_common/quotation/author'].values">
+                                <a ng-click="searchTopic(f.id)">{{f.text}}</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- /book/written_work/author -->
+                <div class="panel panel-default" ng-show="details.property['/book/written_work/author']">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Author</h3>
+                    </div>
+                    <div class="panel-body">
+                        <ul>
+                            <li ng-repeat="f in details.property['/book/written_work/author'].values">
+                                <a ng-click="searchTopic(f.id)">{{f.text}}</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- /music/album/artist -->
+                <div class="panel panel-default" ng-show="details.property['/music/album/artist']">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Artist</h3>
+                    </div>
+                    <div class="panel-body">
+                        <ul>
+                            <li ng-repeat="f in details.property['/music/album/artist'].values">
+                                <a ng-click="searchTopic(f.id)">{{f.text}}</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- /music/instrument/instrumentalists -->
+                <div class="panel panel-default" ng-show="details.property['/music/instrument/instrumentalists']">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Instrumentalists</h3>
+                    </div>
+                    <div class="panel-body">
+                        <ul>
+                            <li ng-repeat="f in details.property['/music/instrument/instrumentalists'].values">
+                                <a ng-click="searchTopic(f.id)">{{f.text}}</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </td>
+        </tr>
+    </table>
+
+</div>
