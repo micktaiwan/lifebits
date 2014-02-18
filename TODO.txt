@@ -5,11 +5,18 @@ Google signin
 Boutton "Save to my bits"
 	Avec catégories
 Boutton "Share"
+Log des requetes
+Consultation history
+Link to page
 Directive pour les blocks informatif
 Implémenter le boutton back
 Faire boutton more pour les listes
 Faire filtre ("millers" dans category "film")
 C'est tellement large que peut-être il faudrait faire un éditeur de trucs à afficher....
+
+/media_common/media_genre/parent_genre
+/media_common/media_genre/child_genres
+
 
 rajouter les quotes de quelqu'un (voir si Dali en a)
 /media_common/quotation_source/quotations

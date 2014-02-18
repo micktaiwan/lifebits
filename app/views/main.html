@@ -1,4 +1,11 @@
 <div>
+
+    <div style="margin-bottom: 30px;" ng-hide="user">
+        <b>Sign in with:</b>
+        <a href="{{authUrl}}"><img src="images/g-signin.png"/></a>
+        <br/>This login uses your current domain google account.
+    </div>
+
     Search for something:
     <input ng-model="search">
 
@@ -23,6 +30,16 @@
             </td>
 
             <td style="vertical-align:top; max-width:600px;align:right;" ng-show="details">
+
+                <!-- Buttons -->
+
+                <div class="btn-group" style="margin-bottom: 10px;" ng-show="user">
+                    <button class="btn btn-info" ng-click="bookmark(details.id)">
+                        <span class="glyphicon glyphicon-heart"></span>Bookmark</button>
+                    <a class="btn btn-success" href="#/bits/share{{details.id}}">
+                        <span class="glyphicon glyphicon-pencil"></span>Share</a>
+                </div>
+
 
                 <!-- /common/topic/description -->
                 <div class="panel panel-primary">
@@ -255,7 +272,7 @@
 
                 <!-- /type/object/type -->
                 <div class="panel panel-default">
-                     <div class="panel-body">
+                    <div class="panel-body">
                         <span style="font-size:0.75em;" ng-repeat="t in details.property['/type/object/type'].values"><a ng-click="searchTopic(t.id)">{{t.text}}</a> /&nbsp;</span>
                     </div>
                 </div>

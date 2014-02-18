@@ -1,10 +1,12 @@
 'use strict';
 
-angular.module('lifemomentsApp')
-    .controller('MainCtrl', function($scope, $timeout) {
+angular.module('lifebitsApp')
+    .controller('MainCtrl', function($scope, $timeout, Google) {
 
         var timeLimit = 0.75 * 1000;
         var promise = null;
+
+        $scope.user = Google.getUser();
 
         function searchChanged() {
             if (promise)
@@ -13,7 +15,7 @@ angular.module('lifemomentsApp')
         }
 
         function doSearch() {
-            if ($scope.search === undefined || $scope.search=='') {
+            if ($scope.search === undefined || $scope.search == '') {
                 $scope.searchResults = null;
                 $scope.details = null;
                 return;
@@ -29,4 +31,13 @@ angular.module('lifemomentsApp')
             console.log($scope.details.id);
         };
 
+        $scope.bookmark = function(id) {
+            var u = Google.getUser();
+            if (!u || !u.id) {
+                $location.path('/bits/bookmark' + id);
+                return;
+            }
+            console.log('bookmarking ' + id);
+
+        };
     });
