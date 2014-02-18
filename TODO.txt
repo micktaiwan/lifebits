@@ -1,7 +1,12 @@
 TODO
 ====
 
-Mettre en ligne :)
+Google signin
+Boutton "Save to my bits"
+	Avec catégories
+Boutton "Share"
+Directive pour les blocks informatif
+Implémenter le boutton back
 Faire boutton more pour les listes
 Faire filtre ("millers" dans category "film")
 C'est tellement large que peut-être il faudrait faire un éditeur de trucs à afficher....

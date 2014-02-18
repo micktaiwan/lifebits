@@ -24,9 +24,6 @@
 
             <td style="vertical-align:top; max-width:600px;align:right;" ng-show="details">
 
-                <!-- /type/object/type -->
-                <span style="font-size:0.75em;" ng-repeat="t in details.property['/type/object/type'].values"><a ng-click="searchTopic(t.id)">{{t.text}}</a> /&nbsp;</span>
-
                 <!-- /common/topic/description -->
                 <div class="panel panel-primary">
                     <div class="panel-heading">
@@ -38,7 +35,7 @@
                 </div>
 
                 <!-- Images -->
-                <div style="margin: 30px;" ng-show="details.property['/common/topic/image']" >
+                <div style="margin: 30px;" ng-show="details.property['/common/topic/image']">
                     <span ng-repeat="t in details.property['/common/topic/image'].values">
                         <img style="margin:2px;border:1px #555 solid; padding:2px;" title="{{t.text}}" src="https://usercontent.googleapis.com/freebase/v1/image/{{t.id}}?maxwidth=200&maxheight=200">
                     </span>
@@ -226,6 +223,43 @@
                         </ul>
                     </div>
                 </div>
+
+                <!-- /media_common/quotation_source/quotations -->
+                <div class="panel panel-default" ng-show="details.property['/media_common/quotation_source/quotations']">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Quotes 2</h3>
+                    </div>
+                    <div class="panel-body">
+                        <ul>
+                            <li ng-repeat="f in details.property['/media_common/quotation_source/quotations'].values">
+                                <a ng-click="searchTopic(f.id)">{{f.text}}</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- /visual_art/visual_artist/artworks -->
+                <div class="panel panel-default" ng-show="details.property['/visual_art/visual_artist/artworks']">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Artworks</h3>
+                    </div>
+                    <div class="panel-body">
+                        <ul>
+                            <li ng-repeat="f in details.property['/visual_art/visual_artist/artworks'].values">
+                                <a ng-click="searchTopic(f.id)">{{f.text}}</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+
+                <!-- /type/object/type -->
+                <div class="panel panel-default">
+                     <div class="panel-body">
+                        <span style="font-size:0.75em;" ng-repeat="t in details.property['/type/object/type'].values"><a ng-click="searchTopic(t.id)">{{t.text}}</a> /&nbsp;</span>
+                    </div>
+                </div>
+
             </td>
         </tr>
     </table>
