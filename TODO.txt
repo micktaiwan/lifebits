@@ -1,0 +1,35 @@
+TODO
+====
+
+Mettre en ligne :)
+Faire boutton more pour les listes
+Faire filtre ("millers" dans category "film")
+C'est tellement large que peut-être il faudrait faire un éditeur de trucs à afficher....
+
+rajouter les quotes de quelqu'un (voir si Dali en a)
+/media_common/quotation_source/quotations
+/people/person/quotations
+
+(voir Dali)
+/common/topic/social_media_presence
+
+Rajouter influence nodes (pour recherches voisines)
+/influence/influence_node/peers
+
+Arbre généalogiques
+/people/person/children
+/people/person/parents
+/people/person/sibling_s
+/people/person/spouse_s
+
+Religions
+/people/person/religion
+
+Films On This Subject
+/film/film_subject/films
+
+
+Films
+	Trailers /film/film/trailers
+	Genres /film/film/genre
+	Director /film/film/directed_by
