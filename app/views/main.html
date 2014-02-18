@@ -212,6 +212,20 @@
                         </ul>
                     </div>
                 </div>
+
+                <!-- /people/person/quotations -->
+                <div class="panel panel-default" ng-show="details.property['/people/person/quotations']">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Quotes</h3>
+                    </div>
+                    <div class="panel-body">
+                        <ul>
+                            <li ng-repeat="f in details.property['/people/person/quotations'].values">
+                                <a ng-click="searchTopic(f.id)">{{f.text}}</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
             </td>
         </tr>
     </table>
