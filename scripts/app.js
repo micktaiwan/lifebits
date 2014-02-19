@@ -6,7 +6,8 @@ angular.module('lifebitsApp', [
     'ngSanitize',
     'ngRoute',
     'google',
-    'lifebitsApp.services.db'
+    'lifebitsApp.services.db',
+    'lifebitsApp.services.history',
 ])
     .config(function($routeProvider) {
         $routeProvider
@@ -26,9 +27,16 @@ angular.module('lifebitsApp', [
                 templateUrl: 'views/bits.html',
                 controller: 'BitsCtrl'
             })
-            .when('/:params', {
+            .when('/login', {
                 templateUrl: 'views/login.html',
                 controller: 'LoginCtrl'
+            })
+            .when('/:params', {
+                redirectTo: '/main'
+                /*
+                templateUrl: 'views/login.html',
+                controller: 'LoginCtrl'
+                */
             })
             .otherwise({
                 redirectTo: '/main'

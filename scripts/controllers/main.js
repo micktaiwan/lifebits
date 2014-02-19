@@ -1,47 +1,39 @@
 'use strict';
 
 angular.module('lifebitsApp')
-    .controller('MainCtrl', function($scope, $timeout, Google) {
+    .controller('MainCtrl', function($scope, $rootScope, $timeout, Google, Db, History) {
 
         var timeLimit = 0.75 * 1000;
         var promise = null;
+        $scope.history = History.getItems();
 
-
-        Google.login(function() {
-            $rootScope.$apply(function() {
-                var u = Google.getUser();
-                //console.log(u);
-                $rootScope.user = u;
-                Db.setUser(u);
-                $location.path('/main');
+        Google.login(
+            function() { // success callback
+                $rootScope.$apply(function() {
+                    var u = Google.getUser();
+                    //console.log(u);
+                    $rootScope.user = u;
+                    $scope.user = u;
+                    Db.setUser(u);
+                });
+            },
+            function() { // failure callback
+                console.log('error in Google login')
             });
-        });
 
         $scope.user = Google.getUser();
 
-/*        function searchChanged() {
-            if (promise)
-                $timeout.cancel(promise);
-            promise = $timeout(doSearch, timeLimit);
+        function doSearch(id) {
+            $scope.details = searchTopic(id);
+            History.add(id, $scope.details.property['/type/object/name'].values[0].text);
+            $scope.history = History.getItems();
         }
-
-        function doSearch() {
-            if ($scope.search === undefined || $scope.search == '') {
-                $scope.searchResults = null;
-                $scope.details = null;
-                return;
-            }
-            $scope.searchResults = searchTopics($scope.search);
-            $scope.details = null;
-        }
-
-        $scope.$watch('search', searchChanged);
 
         $scope.searchTopic = function(id) {
-            $scope.details = searchTopic(id);
+            doSearch(id);
             console.log($scope.details.id);
         };
-*/
+
 
         $scope.bookmark = function(id) {
             var u = Google.getUser();
@@ -58,7 +50,7 @@ angular.module('lifebitsApp')
         }).bind("fb-select", function(e, data) {
             console.log(data);
             $scope.$apply(function() {
-                $scope.details = searchTopic(data.id);
+                doSearch(data.id);
             });
         });
 

@@ -5,7 +5,7 @@ angular.module('lifebitsApp')
 
         var u = Google.getUser();
         if (!u || !u.id) {
-            $location.path('/');
+            $location.path('/login');
             return;
         }
 
