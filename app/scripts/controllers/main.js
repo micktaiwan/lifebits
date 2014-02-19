@@ -19,7 +19,7 @@ angular.module('lifebitsApp')
 
         $scope.user = Google.getUser();
 
-        function searchChanged() {
+/*        function searchChanged() {
             if (promise)
                 $timeout.cancel(promise);
             promise = $timeout(doSearch, timeLimit);
@@ -41,6 +41,7 @@ angular.module('lifebitsApp')
             $scope.details = searchTopic(id);
             console.log($scope.details.id);
         };
+*/
 
         $scope.bookmark = function(id) {
             var u = Google.getUser();
@@ -49,6 +50,16 @@ angular.module('lifebitsApp')
                 return;
             }
             console.log('bookmarking ' + id);
-
         };
+
+        $("#myinput").suggest({
+            //filter: '(all type:/film/director)'
+            "key": freebaseKey
+        }).bind("fb-select", function(e, data) {
+            console.log(data);
+            $scope.$apply(function() {
+                $scope.details = searchTopic(data.id);
+            });
+        });
+
     });

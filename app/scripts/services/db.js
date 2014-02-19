@@ -6,6 +6,7 @@ angular.module('lifebitsApp.services.db', []).factory('Db', function($rootScope,
 
     var shares = [];
     var shares_ref = new Firebase(CONFIG.firebaseUrl + '/shares');
+    var users_ref = new Firebase(CONFIG.firebaseUrl + '/users');
     var lastupdates_ref = new Firebase(CONFIG.firebaseUrl + '/lastupdates');
 
     function safeApply(scope, fn) {
@@ -16,7 +17,34 @@ angular.module('lifebitsApp.services.db', []).factory('Db', function($rootScope,
 
         setUser: function(u) {
             user = u;
-            console.log('connection: ' + u.name + ", " + u.id);
+            console.log('connection:');
+            console.log(u);
+            var userRef = new Firebase(CONFIG.firebaseUrl + '/users/' + u.id);
+            var date = (new Date()).getTime();
+            userRef.once('value', function(snapshot) {
+                if (snapshot.val() === null) {
+                    // user does not exist
+                    users_ref.child(u.id).set({
+                        creationDate: date,
+                        lastConnection: date,
+                        name: u.name,
+                        link: u.link
+                    });
+                    var lu_id = lastupdates_ref.push().name(); // generate a unique id based on timestamp
+                    lastupdates_ref.child(lu_id).set({
+                        id: lu_id,
+                        date: date,
+                        text: u.name,
+                        ref: "users",
+                        action: "add",
+                        object_id: u.id
+                    });
+                } else {
+                    users_ref.child(u.id).set({
+                        lastConnection: date,
+                    });
+                }
+            });
             return u;
         },
 
@@ -37,34 +65,39 @@ angular.module('lifebitsApp.services.db', []).factory('Db', function($rootScope,
             return user;
         },
 
-        addShare: function(id, title, content) {
-            console.log('Db.addShare ' + id + ", " + title + ", " + content);
+        addShare: function(freebase_id, title, content) {
+            freebase_id = freebase_id.replace(/\//g, '_');
+            console.log('Db.addShare ' + freebase_id + ", " + title + ", " + content);
             var date = (new Date()).getTime();
             if (!content) content = '';
             var author = {
                 name: user.name,
                 id: user.id
             };
-            var id = shares_ref.push().name(); // generate a unique id based on timestamp
-            shares_ref.child(id).set({
-                id: id,
+            shares_ref.child(freebase_id).child(author.id).set({
                 creationDate: date,
                 modificationDate: date,
                 title: title,
                 content: content,
                 author: author
             });
+            users_ref.child(author.id).child('shares').child(freebase_id).set({
+                creationDate: date,
+                modificationDate: date,
+                title: title,
+                content: content
+            });
             var lu_id = lastupdates_ref.push().name(); // generate a unique id based on timestamp
             lastupdates_ref.child(lu_id).set({
                 id: lu_id,
                 date: date,
-                text: 'shared ' + title,
+                text: title,
                 author: author,
                 ref: "shares",
                 action: "add",
-                object_id: id
+                object_id: freebase_id
             });
-            return id;
+            return freebase_id;
         },
 
         deleteShare: function(id) {
@@ -87,6 +120,10 @@ angular.module('lifebitsApp.services.db', []).factory('Db', function($rootScope,
                 });
                 shares_ref.child(id).remove();
             });
+        },
+
+        getShareForUser: function(user_id, topic_id) {
+
         },
 
         addComment: function(sid, text) {
