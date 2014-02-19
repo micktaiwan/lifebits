@@ -9,7 +9,7 @@ angular.module('lifebitsApp', [
 ])
     .config(function($routeProvider) {
         $routeProvider
-            .when('/', {
+            .when('/main', {
                 templateUrl: 'views/main.html',
                 controller: 'MainCtrl'
             })
@@ -25,7 +25,11 @@ angular.module('lifebitsApp', [
                 templateUrl: 'views/bits.html',
                 controller: 'BitsCtrl'
             })
+            .when('/:params', {
+                templateUrl: 'views/login.html',
+                controller: 'LoginCtrl'
+            })
             .otherwise({
-                redirectTo: '/'
+                redirectTo: '/main'
             });
     });

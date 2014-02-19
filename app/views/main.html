@@ -1,8 +1,11 @@
 <div>
 
+    <!-- Sign in -->
     <div style="margin-bottom: 30px;" ng-hide="user">
         <b>Sign in with:</b>
-        <a href="{{authUrl}}"><img src="images/g-signin.png"/></a>
+        <a href="{{authUrl}}">
+            <img src="images/g-signin.png" />
+        </a>
         <br/>This login uses your current domain google account.
     </div>
 
@@ -20,8 +23,7 @@
                     <tr ng-repeat="t in searchResults.result">
                         <td ng-show="t.id">{{$index+1}}. <a ng-click="searchTopic(t.id)">{{t.name}}</a>
                         </td>
-                        <td ng-hide="t.id">{{$index+1}}. {{t.name}} (no topic)
-                        </td>
+                        <td ng-hide="t.id">{{$index+1}}. {{t.name}}</td>
                         <td>
                             <div title="{{t.notable.id}}">{{t.notable.name}}</div>
                         </td>
@@ -29,15 +31,19 @@
                 </table>
             </td>
 
-            <td style="vertical-align:top; max-width:600px;align:right;" ng-show="details">
+            <td style="vertical-align:top; max-width:400px;align:right;" ng-show="details">
 
                 <!-- Buttons -->
 
                 <div class="btn-group" style="margin-bottom: 10px;" ng-show="user">
                     <button class="btn btn-info" ng-click="bookmark(details.id)">
-                        <span class="glyphicon glyphicon-heart"></span>Bookmark</button>
+                        <span class="glyphicon glyphicon-heart"></span>
+                        Bookmark
+                    </button>
                     <a class="btn btn-success" href="#/bits/share{{details.id}}">
-                        <span class="glyphicon glyphicon-pencil"></span>Share</a>
+                        <span class="glyphicon glyphicon-pencil"></span>
+                        Share
+                    </a>
                 </div>
 
 

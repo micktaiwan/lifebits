@@ -6,6 +6,17 @@ angular.module('lifebitsApp')
         var timeLimit = 0.75 * 1000;
         var promise = null;
 
+
+        Google.login(function() {
+            $rootScope.$apply(function() {
+                var u = Google.getUser();
+                //console.log(u);
+                $rootScope.user = u;
+                Db.setUser(u);
+                $location.path('/main');
+            });
+        });
+
         $scope.user = Google.getUser();
 
         function searchChanged() {

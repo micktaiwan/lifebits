@@ -14,7 +14,7 @@ angular.module('google', []).factory('Google', function ($rootScope, $routeParam
 
     var setting = {
       'host':     "https://accounts.google.com/o/oauth2/auth",
-      'clientId': '156435181273.apps.googleusercontent.com'
+      'clientId': '572156922980-a1450qbjskbpeu11tsqscouiqaqhtv12.apps.googleusercontent.com'
     };
 
     var doAuth = function(callback) {
