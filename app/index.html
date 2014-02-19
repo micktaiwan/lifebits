@@ -16,12 +16,11 @@
     <!-- build:css styles/vendor.css -->
     <!-- bower:css -->
     <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css" />
-    <link type="text/css" rel="stylesheet" href="https://www.gstatic.com/freebase/suggest/4_2/suggest.min.css" />
-
     <!-- endbower -->
     <!-- endbuild -->
     <!-- build:css({.tmp,app}) styles/main.css -->
     <link rel="stylesheet" href="styles/main.css">
+    <link type="text/css" rel="stylesheet" href="https://www.gstatic.com/freebase/suggest/4_2/suggest.min.css" />
     <!-- endbuild -->
 </head>
 
@@ -30,18 +29,39 @@
       <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
     <![endif]-->
 
-    <div class="header">
-
-        <ul class="nav nav-pills pull-right">
-            <li class="active"><a ng-href="#">Home</a>
-            </li>
-            <!--             <li><a ng-href="#">About</a>
-            </li>
-            <li><a ng-href="#">Contact</a>
-            </li> -->
-        </ul>
-        <h3 class="text-muted">Lifebits</h3>
-    </div>
+    <nav class="navbar navbar-inverse" role="navigation" ng-controller="HeaderCtrl">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="#">Lifebits</a>
+        </div>
+        <div>
+            <ul class="nav navbar-nav">
+                <li ng-class="{ active: isActive('/main')}"><a href="#">Home</a>
+                </li>
+                <li ng-class="{ active: isActive('/bits')}"><a href="#/bits">Bits</a>
+                </li>
+                <!--                 <li><a href="#">SVN</a>
+                </li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Java <b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="#">jmeter</a>
+                        </li>
+                        <li><a href="#">EJB</a>
+                        </li>
+                        <li><a href="#">Jasper Report</a>
+                        </li>
+                        <li class="divider"></li>
+                        <li><a href="#">Separated link</a>
+                        </li>
+                        <li class="divider"></li>
+                        <li><a href="#">One more separated link</a>
+                        </li>
+                    </ul>
+                </li> -->
+            </ul>
+        </div>
+        <p class="navbar-text">{{user.name}}</p>
+    </nav>
 
     <!-- Add your site or application content here -->
     <div class="container" ng-view=""></div>
@@ -95,11 +115,13 @@
     <script src="scripts/lib/lib.js"></script>
     <script src="scripts/app.js"></script>
     <script src="scripts/env.js"></script>
+    <script src="scripts/controllers/header.js"></script>
     <script src="scripts/controllers/main.js"></script>
     <script src="scripts/controllers/bits.js"></script>
     <script src="scripts/controllers/login.js"></script>
     <script src="scripts/services/google.js"></script>
     <script src="scripts/services/db.js"></script>
+    <script src="scripts/services/history.js"></script>
     <!-- endbuild -->
 </body>
 

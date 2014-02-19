@@ -16,9 +16,8 @@ angular.module('lifebitsApp')
     $rootScope.logout = function() {
       Google.logout();
       $rootScope.user = null;
-      $location.path('/');
+      $location.path('/main');
       return;
     }
-
 
   });
