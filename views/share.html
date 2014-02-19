@@ -1,0 +1,18 @@
+
+<!-- /common/topic/description -->
+
+<div class="panel panel-primary">
+    <div class="panel-heading">
+        <h3 class="panel-title">{{title}}</h3>
+    </div>
+    <div class="panel-body">
+        {{details.property['/common/topic/description'].values[0].value}}
+    </div>
+</div>
+
+<form name="add_form" ng-submit="share(id, title, content)" role="form">
+    <div class="form-group">
+        <textarea class="form-control"  ng-model="content" placeholder="What's on your mind"></textarea><br/>
+        <button type="submit" class="btn btn-primary">Share</button>
+    </div>
+</form>
