@@ -5,7 +5,8 @@ angular.module('lifebitsApp', [
     'ngResource',
     'ngSanitize',
     'ngRoute',
-    'google'
+    'google',
+    'lifebitsApp.services.db'
 ])
     .config(function($routeProvider) {
         $routeProvider
