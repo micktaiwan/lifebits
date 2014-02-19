@@ -1,14 +1,14 @@
 'use strict';
 
 angular.module('lifebitsApp')
-  .controller('LoginCtrl', function ($rootScope, $location, Google) {
+  .controller('LoginCtrl', function ($rootScope, $location, Google, Db) {
 
     Google.login(function(){
       $rootScope.$apply(function(){
         var u = Google.getUser();
-        //console.log(u);
+        console.log(u);
         $rootScope.user = u;
-        //Db.setUser(u);
+        Db.setUser(u);
         $location.path('/main');
       });
     });
