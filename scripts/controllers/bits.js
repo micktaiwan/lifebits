@@ -9,8 +9,7 @@ angular.module('lifebitsApp')
     if ($routeParams.topicId) {
       $rootScope.searchTopic('/' + $routeParams.topicId);
       Db.getShares('/'+$routeParams.topicId, function(shares){
-      	$scope.shares = shares;
-      	console.log(shares);
+        $rootScope.shares = shares;
       });
     }
 
@@ -24,8 +23,9 @@ angular.module('lifebitsApp')
       $rootScope.searchTopic('/' + $routeParams.shareId);
     }
 
-    $scope.share = function(id, title, content) {
-      Db.addShare(id, title, content);
+    $scope.share = function(id, title, content, image_id) {
+      Db.addShare(id, title, content, image_id);
+      $location.path('/bits/id'+id);
     }
 
   });
