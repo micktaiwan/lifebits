@@ -8,6 +8,10 @@ angular.module('lifebitsApp')
     // display
     if ($routeParams.topicId) {
       $rootScope.searchTopic('/' + $routeParams.topicId);
+      Db.getShares('/'+$routeParams.topicId, function(shares){
+      	$scope.shares = shares;
+      	console.log(shares);
+      });
     }
 
     // share

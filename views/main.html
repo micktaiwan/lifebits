@@ -1,5 +1,6 @@
 <div ng-include="'views/history.html'"></div>
 
+<button class="btn btn-default" ng-click="details=null" ng-show="details">Close topic</button>
 <div ng-include="'views/bits_details.html'" ng-show="details"></div>
 
 <div ng-repeat="s in shares">
@@ -9,7 +10,7 @@
     </div>
     <div class="panel-body">
       {{s.content}}<br/>
-      <a href="#/bits/id{{s.topic_id}}">Show topic</div>
+      <a href="#/bits/id{{s.id}}">Show topic</div>
 
     </div>
   </div>
