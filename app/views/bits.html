@@ -1,2 +1,19 @@
 <div ng-include="'views/history.html'"></div>
-<div ng-include="'views/bits_details.html'""></div>
+
+<div class="row">
+
+  <div class="col-md-6" ng-include="'views/bits_details.html'"></div>
+
+  <div class="col-md-6">
+
+    <div class="panel panel-success">
+      <div class="panel-heading">
+        <h3 class="panel-title">Shares</h3>
+      </div>
+      <ul class="panel-body">
+        <li ng-repeat="s in shares">{{s.author.name}}: {{s.content}}</li>
+      </ul>
+    </div>
+
+  </div>
+</div>

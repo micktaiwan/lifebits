@@ -21,7 +21,7 @@ angular.module('lifebitsApp')
     $rootScope.user = Google.getUser();
 
     function doSearch(id) {
-      $rootScope.details = searchTopic(id);
+      $rootScope.details = doSearchTopic(id);
       $rootScope.title = $rootScope.details.property['/type/object/name'].values[0].value;
       $rootScope.id = id;
       History.add(id, $rootScope.title);
