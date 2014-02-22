@@ -4,12 +4,12 @@
 <div ng-include="'views/bits_details.html'" ng-show="details"></div>
 
 <div ng-repeat="s in shares">
-    <div class="panel panel-primary">
-    <div class="panel-heading">
-      <h3 class="panel-title">{{s.title}} ({{s.author.name}})</h3>
-    </div>
+  <div class="panel panel-primary">
     <div class="panel-body">
-      {{s.content}}<br/>
+      <a href="#/bits/id{{s.id}}"><img ng-show="{{s.image_id}}" style="float:left; margin-right: 20px;" src="https://usercontent.googleapis.com/freebase/v1/image/{{s.image_id}}?maxwidth=100&maxheight=100"></a>
+      <h2 class="panel-title">{{s.title}}</h2>
+      {{s.content}} -- {{s.author.name}}
+      <br/>
       <a href="#/bits/id{{s.id}}">Show topic</div>
 
     </div>
