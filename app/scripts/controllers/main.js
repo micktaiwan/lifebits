@@ -1,57 +1,24 @@
 'use strict';
 
 angular.module('lifebitsApp')
-    .controller('MainCtrl', function($scope, $rootScope, $timeout, Google, Db, History) {
+  .controller('MainCtrl', function($scope, Db) {
 
-        var timeLimit = 0.75 * 1000;
-        var promise = null;
-        $scope.history = History.getItems();
-
-        Google.login(
-            function() { // success callback
-                $rootScope.$apply(function() {
-                    var u = Google.getUser();
-                    //console.log(u);
-                    $rootScope.user = u;
-                    $scope.user = u;
-                    Db.setUser(u);
-                });
-            },
-            function() { // failure callback
-                console.log('error in Google login')
-            });
-
-        $scope.user = Google.getUser();
-
-        function doSearch(id) {
-            $scope.details = searchTopic(id);
-            History.add(id, $scope.details.property['/type/object/name'].values[0].text);
-            $scope.history = History.getItems();
+    function toArray(obj) {
+      var shares = [];
+      for (var topic_id in obj) {
+        for (var prop_id in obj[topic_id]) {
+            var share = obj[topic_id][prop_id];
+            share['topic_id'] = topic_id.replace(/_/g, '/');
+            shares.push(share);
         }
 
-        $scope.searchTopic = function(id) {
-            doSearch(id);
-            console.log($scope.details.id);
-        };
+      }
+      return shares;
+    }
 
-
-        $scope.bookmark = function(id) {
-            var u = Google.getUser();
-            if (!u || !u.id) {
-                $location.path('/bits/bookmark' + id);
-                return;
-            }
-            console.log('bookmarking ' + id);
-        };
-
-        $("#myinput").suggest({
-            //filter: '(all type:/film/director)'
-            "key": freebaseKey
-        }).bind("fb-select", function(e, data) {
-            console.log(data);
-            $scope.$apply(function() {
-                doSearch(data.id);
-            });
-        });
-
+    Db.getShares(function(shares) {
+      //console.log(shares);
+      $scope.shares = toArray(shares);
     });
+
+  });

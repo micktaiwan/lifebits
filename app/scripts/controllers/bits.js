@@ -1,28 +1,27 @@
 'use strict';
 
 angular.module('lifebitsApp')
-    .controller('BitsCtrl', function($scope, $location, $routeParams, Google, Db) {
+  .controller('BitsCtrl', function($scope, $rootScope, $location, $routeParams, Google, Db, History) {
 
-        var u = Google.getUser();
-        if (!u || !u.id) {
-            $location.path('/login');
-            return;
-        }
+    $rootScope.history = History.getItems();
 
-		// display
-        if($routeParams.topicId) {
-        	$scope.details = searchTopic('/'+$routeParams.topicId);
-        }
+    // display
+    if ($routeParams.topicId) {
+      $rootScope.searchTopic('/' + $routeParams.topicId);
+    }
 
-		// share
-        if($routeParams.shareId) {
-        	$scope.details = searchTopic('/'+$routeParams.shareId);
-        	$scope.title = $scope.details.property['/type/object/name'].values[0].value;
-			$scope.id = $scope.details.id;
-        }
+    // share
+    if ($routeParams.shareId) {
+      var u = Google.getUser();
+      if (!u || !u.id) {
+        $location.path('/login');
+        return;
+      }
+      $rootScope.searchTopic('/' + $routeParams.shareId);
+    }
 
-        $scope.share = function(id, title, content) {
-        	Db.addShare(id, title, content);
-        }
+    $scope.share = function(id, title, content) {
+      Db.addShare(id, title, content);
+    }
 
-    });
+  });
