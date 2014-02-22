@@ -6,7 +6,13 @@
 
   <div class="col-md-6">
 
-    <div class="panel panel-success">
+    <div class="panel panel-default" ng-hide="shares && shares.length>0">
+      <div class="panel-body">
+        No shares
+      </div>
+    </div>
+
+    <div class="panel panel-success" ng-show="shares && shares.length>0">
       <div class="panel-heading">
         <h3 class="panel-title">Shares</h3>
       </div>
