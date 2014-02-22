@@ -32,7 +32,7 @@ angular.module('lifebitsApp', [
                 controller: 'LoginCtrl'
             })
             .when('/:params', {
-                redirectTo: '/main'
+                redirectTo: '/login'
                 /*
                 templateUrl: 'views/login.html',
                 controller: 'LoginCtrl'

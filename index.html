@@ -7,39 +7,41 @@
 <!--<![endif]-->
 
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title></title>
-    <meta name="description" content="">
-    <meta name="viewport" content="width=device-width">
-    <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
-    <!-- build:css styles/vendor.css -->
-    <!-- bower:css -->
-    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css" />
-    <!-- endbower -->
-    <!-- endbuild -->
-    <!-- build:css({.tmp,app}) styles/main.css -->
-    <link rel="stylesheet" href="styles/main.css">
-    <link type="text/css" rel="stylesheet" href="https://www.gstatic.com/freebase/suggest/4_2/suggest.min.css" />
-    <!-- endbuild -->
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title></title>
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width">
+  <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+  <!-- build:css styles/vendor.css -->
+  <!-- bower:css -->
+  <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css" />
+  <!-- endbower -->
+  <!-- endbuild -->
+  <!-- build:css({.tmp,app}) styles/main.css -->
+  <link rel="stylesheet" href="styles/main.css">
+  <link type="text/css" rel="stylesheet" href="https://www.gstatic.com/freebase/suggest/4_2/suggest.min.css" />
+  <!-- endbuild -->
 </head>
 
-<body ng-app="lifebitsApp">
-    <!--[if lt IE 7]>
+<body ng-app="lifebitsApp" ng-controller="SearchCtrl">
+  <!--[if lt IE 7]>
       <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
     <![endif]-->
 
-    <nav class="navbar navbar-inverse" role="navigation" ng-controller="HeaderCtrl">
-        <div class="navbar-header">
-            <a class="navbar-brand" href="#">Lifebits</a>
-        </div>
-        <div>
-            <ul class="nav navbar-nav">
-                <li ng-class="{ active: isActive('/main')}"><a href="#">Home</a>
-                </li>
-                <li ng-class="{ active: isActive('/bits')}"><a href="#/bits">Bits</a>
-                </li>
-                <!--                 <li><a href="#">SVN</a>
+  <nav class="navbar navbar-inverse" role="navigation" ng-controller="HeaderCtrl">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="#">Lifebits</a>
+    </div>
+    <div>
+      <ul class="nav navbar-nav">
+        <li ng-class="{ active: isActive('/main')}"><a href="#">Home</a>
+        </li>
+        <li ng-class="{ active: isActive('/bits')}"><a href="#/bits">Bits</a>
+        </li>
+
+
+        <!--                 <li><a href="#">SVN</a>
                 </li>
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">Java <b class="caret"></b></a>
@@ -58,20 +60,39 @@
                         </li>
                     </ul>
                 </li> -->
-            </ul>
-        </div>
-        <p class="navbar-text">{{user.name}}</p>
-    </nav>
-
-    <!-- Add your site or application content here -->
-    <div class="container" ng-view=""></div>
-
-    <div class="footer">
-        <p></p>
+      </ul>
     </div>
+    <div>
+      <div class="col-md-3">
+        <form class="navbar-form" role="search">
+          <div class="input-group">
+            <input type="text" id="myinput" ng-model="search" class="form-control" placeholder="Search for something" />
+            <div class="input-group-btn">
+              <button class="btn btn-default" type="submit" ng-click="searchTopic(search)"><i class="glyphicon glyphicon-search"></i>
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+    <!-- Sign in -->
+    <div class="navbar-header" ng-hide="user">
+      <a class="navbar-brand" href="{{authUrl}}">
+        <img src="images/g-signin.png" />
+      </a>
+    </div>
+    <div class="navbar-text">{{user.name}}</div>
+  </nav>
 
-    <!-- Google Analytics: change UA-XXXXX-X to be your site's ID -->
-    <!--
+  <!-- Add your site or application content here -->
+  <div class="container" ng-view=""></div>
+
+  <div class="footer">
+    <p></p>
+  </div>
+
+  <!-- Google Analytics: change UA-XXXXX-X to be your site's ID -->
+  <!--
     <script>
     (function(i, s, o, g, r, a, m) {
         i['GoogleAnalyticsObject'] = r;
@@ -90,39 +111,40 @@
     </script>
  -->
 
-    <!--[if lt IE 9]>
+  <!--[if lt IE 9]>
     <script src="bower_components/es5-shim/es5-shim.js"></script>
     <script src="bower_components/json3/lib/json3.min.js"></script>
     <![endif]-->
 
-    <script src="//cdn.firebase.com/v0/firebase.js"></script>
-    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.js"></script>
-    <!--<script src="bower_components/jquery/jquery.js"></script>-->
-    <script type="text/javascript" src="https://www.gstatic.com/freebase/suggest/4_2/suggest.min.js"></script>
+  <script src="//cdn.firebase.com/v0/firebase.js"></script>
+  <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.js"></script>
+  <!--<script src="bower_components/jquery/jquery.js"></script>-->
+  <script type="text/javascript" src="https://www.gstatic.com/freebase/suggest/4_2/suggest.min.js"></script>
 
-    <!-- build:js scripts/vendor.js -->
-    <!-- bower:js -->
-    <script src="bower_components/angular/angular.js"></script>
-    <script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
-    <script src="bower_components/angular-resource/angular-resource.js"></script>
-    <script src="bower_components/angular-cookies/angular-cookies.js"></script>
-    <script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
-    <script src="bower_components/angular-route/angular-route.js"></script>
-    <!-- endbower -->
-    <!-- endbuild -->
+  <!-- build:js scripts/vendor.js -->
+  <!-- bower:js -->
+  <script src="bower_components/angular/angular.js"></script>
+  <script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
+  <script src="bower_components/angular-resource/angular-resource.js"></script>
+  <script src="bower_components/angular-cookies/angular-cookies.js"></script>
+  <script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
+  <script src="bower_components/angular-route/angular-route.js"></script>
+  <!-- endbower -->
+  <!-- endbuild -->
 
-    <!-- build:js({.tmp,app}) scripts/scripts.js -->
-    <script src="scripts/lib/lib.js"></script>
-    <script src="scripts/app.js"></script>
-    <script src="scripts/env.js"></script>
-    <script src="scripts/controllers/header.js"></script>
-    <script src="scripts/controllers/main.js"></script>
-    <script src="scripts/controllers/bits.js"></script>
-    <script src="scripts/controllers/login.js"></script>
-    <script src="scripts/services/google.js"></script>
-    <script src="scripts/services/db.js"></script>
-    <script src="scripts/services/history.js"></script>
-    <!-- endbuild -->
+  <!-- build:js({.tmp,app}) scripts/scripts.js -->
+  <script src="scripts/lib/lib.js"></script>
+  <script src="scripts/app.js"></script>
+  <script src="scripts/env.js"></script>
+  <script src="scripts/controllers/header.js"></script>
+  <script src="scripts/controllers/search.js"></script>
+  <script src="scripts/controllers/main.js"></script>
+  <script src="scripts/controllers/bits.js"></script>
+  <script src="scripts/controllers/login.js"></script>
+  <script src="scripts/services/google.js"></script>
+  <script src="scripts/services/db.js"></script>
+  <script src="scripts/services/history.js"></script>
+  <!-- endbuild -->
 </body>
 
 </html>

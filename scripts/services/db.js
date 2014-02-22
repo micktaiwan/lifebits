@@ -40,7 +40,7 @@ angular.module('lifebitsApp.services.db', []).factory('Db', function($rootScope,
                         object_id: u.id
                     });
                 } else {
-                    users_ref.child(u.id).set({
+                    users_ref.child(u.id).update({
                         lastConnection: date,
                     });
                 }
@@ -81,7 +81,7 @@ angular.module('lifebitsApp.services.db', []).factory('Db', function($rootScope,
                 content: content,
                 author: author
             });
-            users_ref.child(author.id).child('shares').child(freebase_id).set({
+            users_ref.child(author.id).child('shares').child(freebase_id).update({
                 creationDate: date,
                 modificationDate: date,
                 title: title,
