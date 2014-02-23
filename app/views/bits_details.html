@@ -25,7 +25,12 @@
     <!-- /common/topic/description -->
     <div class="panel panel-primary">
       <div class="panel-heading">
-        <h3 class="panel-title">{{details.property['/type/object/name'].values[0].value}}</h3>
+        <h3 class="panel-title">
+          {{details.property['/type/object/name'].values[0].value}}
+          <span ng-repeat="f in details.property['/common/topic/notable_types'].values">
+            ({{f.text}})
+          </span>
+        </h3>
       </div>
       <div class="panel-body">
         {{details.property['/common/topic/description'].values[0].value}}
@@ -268,7 +273,7 @@
       </div>
       <ul class="panel-body">
         <li ng-repeat="f in details.property['/influence/influence_node/peers'].values">
-          <a class="internal_link" ng-click="searchTopic(f.id)">{{f.text}}</a>
+          <a class="internal_link" class="internal_link" ng-click="searchTopic(f.property['/influence/peer_relationship/peers'].values[0].id)">{{f.property['/influence/peer_relationship/peers'].values[0].text}}</a>
         </li>
       </ul>
     </div>
@@ -305,23 +310,10 @@
       </div>
       <ul class="panel-body">
         <li ng-repeat="f in details.property['/film/person_or_entity_appearing_in_film/films'].values">
-          <a class="internal_link" ng-click="searchTopic(f.id)">{{f.text}}</a>
+          <a class="internal_link" class="internal_link" ng-click="searchTopic(f.property['/film/personal_film_appearance/film'].values[0].id)">{{f.property['/film/personal_film_appearance/film'].values[0].text}}</a>
         </li>
       </ul>
     </div>
-
-    <!-- /common/topic/notable_for -->
-    <div class="panel panel-default" ng-show="details.property['/common/topic/notable_for']">
-      <div class="panel-heading">
-        <h3 class="panel-title">Notable for</h3>
-      </div>
-      <ul class="panel-body">
-        <li ng-repeat="f in details.property['/common/topic/notable_for'].values">
-          <a class="internal_link" ng-click="searchTopic(f.id)">{{f.text}}</a>
-        </li>
-      </ul>
-    </div>
-
 
     <!-- /common/topic/social_media_presence -->
     <div class="panel panel-default" ng-show="details.property['/common/topic/social_media_presence']">
