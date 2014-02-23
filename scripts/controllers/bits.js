@@ -16,7 +16,7 @@ angular.module('lifebitsApp')
     if ($routeParams.topicId) {
       $rootScope.searchTopic('/' + $routeParams.topicId);
       Db.getShares('/'+$routeParams.topicId, function(shares){
-        $rootScope.shares = sortByDate(shares);
+        $rootScope.topicShares = sortByDate(shares);
       });
     }
 

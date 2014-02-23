@@ -28,9 +28,9 @@
     </div>
 
     <!-- Images -->
-    <div style="margin: 30px;" ng-if="details.property['/common/topic/image']">
+    <div style="margin: 30px;text-align:center;" ng-if="details.property['/common/topic/image']">
       <span ng-repeat="t in details.property['/common/topic/image'].values">
-        <img style="margin:2px;border:1px #555 solid; padding:2px;" title="{{t.text}}" src="https://usercontent.googleapis.com/freebase/v1/image/{{t.id}}?maxwidth=200&maxheight=200">
+        <img style="margin:2px;border:1px #555 solid; padding:2px;" title="{{t.text}}" src="https://usercontent.googleapis.com/freebase/v1/image/{{t.id}}?maxwidth=300&maxheight=300">
       </span>
       <!-- &mode=fillcropmid -->
     </div>
@@ -40,13 +40,11 @@
       <div class="panel-heading">
         <h3 class="panel-title">Professions</h3>
       </div>
-      <div class="panel-body">
-        <ul>
-          <li ng-repeat="f in details.property['/people/person/profession'].values">
-            <a class="internal_link" ng-click="searchTopic(f.id)">{{f.text}}</a>
-          </li>
-        </ul>
-      </div>
+      <ul class="panel-body">
+        <li ng-repeat="f in details.property['/people/person/profession'].values">
+          <a class="internal_link" ng-click="searchTopic(f.id)">{{f.text}}</a>
+        </li>
+      </ul>
     </div>
 
     <!-- /film/director/film -->
@@ -54,13 +52,11 @@
       <div class="panel-heading">
         <h3 class="panel-title">Films as director</h3>
       </div>
-      <div class="panel-body">
-        <ul>
-          <li ng-repeat="f in details.property['/film/director/film'].values">
-            <a class="internal_link" ng-click="searchTopic(f.id)">{{f.text}}</a>
-          </li>
-        </ul>
-      </div>
+      <ul class="panel-body">
+        <li ng-repeat="f in details.property['/film/director/film'].values">
+          <a class="internal_link" ng-click="searchTopic(f.id)">{{f.text}}</a>
+        </li>
+      </ul>
     </div>
 
     <!-- /film/actor/film -->
@@ -68,13 +64,23 @@
       <div class="panel-heading">
         <h3 class="panel-title">Films as actor</h3>
       </div>
-      <div class="panel-body">
-        <ul>
-          <li ng-repeat="f in details.property['/film/actor/film'].values">
-            <a class="internal_link" ng-click="searchTopic(f.property['/film/performance/film'].values[0].id)">{{f.property['/film/performance/film'].values[0].text}}</a> ({{f.property['/film/performance/character'].values[0].text}})
-          </li>
-        </ul>
+      <ul class="panel-body">
+        <li ng-repeat="f in details.property['/film/actor/film'].values">
+          <a class="internal_link" ng-click="searchTopic(f.property['/film/performance/film'].values[0].id)">{{f.property['/film/performance/film'].values[0].text}}</a> ({{f.property['/film/performance/character'].values[0].text}})
+        </li>
+      </ul>
+    </div>
+
+    <!-- /film/film/directed_by -->
+    <div class="panel panel-default" ng-show="details.property['/film/film/directed_by']">
+      <div class="panel-heading">
+        <h3 class="panel-title">Directors</h3>
       </div>
+      <ul class="panel-body">
+        <li ng-repeat="f in details.property['/film/film/directed_by'].values">
+          <a class="internal_link" ng-click="searchTopic(f.id)">{{f.text}}</a>
+        </li>
+      </ul>
     </div>
 
     <!-- /film/film/starring -->
@@ -82,13 +88,11 @@
       <div class="panel-heading">
         <h3 class="panel-title">Actors</h3>
       </div>
-      <div class="panel-body">
-        <ul>
-          <li ng-repeat="f in details.property['/film/film/starring'].values">
-            <a class="internal_link" ng-click="searchTopic(f.property['/film/performance/actor'].values[0].id)">{{f.property['/film/performance/actor'].values[0].text}}</a> ({{f.property['/film/performance/character'].values[0].text}})
-          </li>
-        </ul>
-      </div>
+      <ul class="panel-body">
+        <li ng-repeat="f in details.property['/film/film/starring'].values">
+          <a class="internal_link" ng-click="searchTopic(f.property['/film/performance/actor'].values[0].id)">{{f.property['/film/performance/actor'].values[0].text}}</a> ({{f.property['/film/performance/character'].values[0].text}})
+        </li>
+      </ul>
     </div>
 
     <!-- /book/author/works_written -->
@@ -96,13 +100,11 @@
       <div class="panel-heading">
         <h3 class="panel-title">Books as author</h3>
       </div>
-      <div class="panel-body">
-        <ul>
-          <li ng-repeat="f in details.property['/book/author/works_written'].values">
-            <a class="internal_link" ng-click="searchTopic(f.id)">{{f.text}}</a>
-          </li>
-        </ul>
-      </div>
+      <ul class="panel-body">
+        <li ng-repeat="f in details.property['/book/author/works_written'].values">
+          <a class="internal_link" ng-click="searchTopic(f.id)">{{f.text}}</a>
+        </li>
+      </ul>
     </div>
 
     <!-- /common/topic/official_website -->
@@ -110,13 +112,11 @@
       <div class="panel-heading">
         <h3 class="panel-title">Websites</h3>
       </div>
-      <div class="panel-body">
-        <ul>
-          <li ng-repeat="f in details.property['/common/topic/official_website'].values">
-            <a href="{{f.text}}">{{f.text}}</a>
-          </li>
-        </ul>
-      </div>
+      <ul class="panel-body">
+        <li ng-repeat="f in details.property['/common/topic/official_website'].values">
+          <a href="{{f.text}}">{{f.text}}</a>
+        </li>
+      </ul>
     </div>
 
     <!-- /music/group_member/membership -->
@@ -124,13 +124,11 @@
       <div class="panel-heading">
         <h3 class="panel-title">Music Groups</h3>
       </div>
-      <div class="panel-body">
-        <ul>
-          <li ng-repeat="f in details.property['/music/group_member/membership'].values">
-            <a class="internal_link" class="internal_link" ng-click="searchTopic(f.property['/music/group_membership/group'].values[0].id)">{{f.property['/music/group_membership/group'].values[0].text}}</a>
-          </li>
-        </ul>
-      </div>
+      <ul class="panel-body">
+        <li ng-repeat="f in details.property['/music/group_member/membership'].values">
+          <a class="internal_link" class="internal_link" ng-click="searchTopic(f.property['/music/group_membership/group'].values[0].id)">{{f.property['/music/group_membership/group'].values[0].text}}</a>
+        </li>
+      </ul>
     </div>
 
     <!-- /music/musical_group/member -->
@@ -138,13 +136,11 @@
       <div class="panel-heading">
         <h3 class="panel-title">Group Members</h3>
       </div>
-      <div class="panel-body">
-        <ul>
-          <li ng-repeat="f in details.property['/music/musical_group/member'].values">
-            <a class="internal_link" ng-click="searchTopic(f.property['/music/group_membership/member'].values[0].id)">{{f.property['/music/group_membership/member'].values[0].text}}</a>
-          </li>
-        </ul>
-      </div>
+      <ul class="panel-body">
+        <li ng-repeat="f in details.property['/music/musical_group/member'].values">
+          <a class="internal_link" ng-click="searchTopic(f.property['/music/group_membership/member'].values[0].id)">{{f.property['/music/group_membership/member'].values[0].text}}</a>
+        </li>
+      </ul>
     </div>
 
     <!-- /media_common/quotation_subject/quotations_about_this_subject -->
@@ -152,13 +148,11 @@
       <div class="panel-heading">
         <h3 class="panel-title">Quotations about this subject</h3>
       </div>
-      <div class="panel-body">
-        <ul>
-          <li ng-repeat="f in details.property['/media_common/quotation_subject/quotations_about_this_subject'].values">
-            <a class="internal_link" ng-click="searchTopic(f.id)">{{f.text}}</a>
-          </li>
-        </ul>
-      </div>
+      <ul class="panel-body">
+        <li ng-repeat="f in details.property['/media_common/quotation_subject/quotations_about_this_subject'].values">
+          <a class="internal_link" ng-click="searchTopic(f.id)">{{f.text}}</a>
+        </li>
+      </ul>
     </div>
 
     <!-- /media_common/quotation/author -->
@@ -166,13 +160,11 @@
       <div class="panel-heading">
         <h3 class="panel-title">Quotation authors</h3>
       </div>
-      <div class="panel-body">
-        <ul>
-          <li ng-repeat="f in details.property['/media_common/quotation/author'].values">
-            <a class="internal_link" ng-click="searchTopic(f.id)">{{f.text}}</a>
-          </li>
-        </ul>
-      </div>
+      <ul class="panel-body">
+        <li ng-repeat="f in details.property['/media_common/quotation/author'].values">
+          <a class="internal_link" ng-click="searchTopic(f.id)">{{f.text}}</a>
+        </li>
+      </ul>
     </div>
 
     <!-- /book/written_work/author -->
@@ -180,13 +172,11 @@
       <div class="panel-heading">
         <h3 class="panel-title">Author</h3>
       </div>
-      <div class="panel-body">
-        <ul>
-          <li ng-repeat="f in details.property['/book/written_work/author'].values">
-            <a class="internal_link" ng-click="searchTopic(f.id)">{{f.text}}</a>
-          </li>
-        </ul>
-      </div>
+      <ul class="panel-body">
+        <li ng-repeat="f in details.property['/book/written_work/author'].values">
+          <a class="internal_link" ng-click="searchTopic(f.id)">{{f.text}}</a>
+        </li>
+      </ul>
     </div>
 
     <!-- /music/album/artist -->
@@ -194,13 +184,11 @@
       <div class="panel-heading">
         <h3 class="panel-title">Artist</h3>
       </div>
-      <div class="panel-body">
-        <ul>
-          <li ng-repeat="f in details.property['/music/album/artist'].values">
-            <a class="internal_link" ng-click="searchTopic(f.id)">{{f.text}}</a>
-          </li>
-        </ul>
-      </div>
+      <ul class="panel-body">
+        <li ng-repeat="f in details.property['/music/album/artist'].values">
+          <a class="internal_link" ng-click="searchTopic(f.id)">{{f.text}}</a>
+        </li>
+      </ul>
     </div>
 
     <!-- /music/instrument/instrumentalists -->
@@ -208,13 +196,11 @@
       <div class="panel-heading">
         <h3 class="panel-title">Instrumentalists</h3>
       </div>
-      <div class="panel-body">
-        <ul>
-          <li ng-repeat="f in details.property['/music/instrument/instrumentalists'].values">
-            <a class="internal_link" ng-click="searchTopic(f.id)">{{f.text}}</a>
-          </li>
-        </ul>
-      </div>
+      <ul class="panel-body">
+        <li ng-repeat="f in details.property['/music/instrument/instrumentalists'].values">
+          <a class="internal_link" ng-click="searchTopic(f.id)">{{f.text}}</a>
+        </li>
+      </ul>
     </div>
 
     <!-- /people/person/quotations -->
@@ -222,13 +208,12 @@
       <div class="panel-heading">
         <h3 class="panel-title">Quotes</h3>
       </div>
-      <div class="panel-body">
-        <ul>
-          <li ng-repeat="f in details.property['/people/person/quotations'].values">
-            <a class="internal_link" ng-click="searchTopic(f.id)">{{f.text}}</a>
-          </li>
-        </ul>
-      </div>
+      <ul class="panel-body">
+        <li ng-repeat="f in details.property['/people/person/quotations'].values">
+          <a class="internal_link" ng-click="searchTopic(f.id)">{{f.text}}</a>
+        </li>
+      </ul>
+
     </div>
 
     <!-- /media_common/quotation_source/quotations -->
@@ -236,13 +221,12 @@
       <div class="panel-heading">
         <h3 class="panel-title">Quotes</h3>
       </div>
-      <div class="panel-body">
-        <ul>
-          <li ng-repeat="f in details.property['/media_common/quotation_source/quotations'].values">
-            <a class="internal_link" ng-click="searchTopic(f.id)">{{f.text}}</a>
-          </li>
-        </ul>
-      </div>
+      <ul class="panel-body">
+        <li ng-repeat="f in details.property['/media_common/quotation_source/quotations'].values">
+          <a class="internal_link" ng-click="searchTopic(f.id)">{{f.text}}</a>
+        </li>
+      </ul>
+
     </div>
 
     <!-- /visual_art/visual_artist/artworks -->
@@ -250,13 +234,12 @@
       <div class="panel-heading">
         <h3 class="panel-title">Artworks</h3>
       </div>
-      <div class="panel-body">
-        <ul>
-          <li ng-repeat="f in details.property['/visual_art/visual_artist/artworks'].values">
-            <a class="internal_link" ng-click="searchTopic(f.id)">{{f.text}}</a>
-          </li>
-        </ul>
-      </div>
+      <ul class="panel-body">
+        <li ng-repeat="f in details.property['/visual_art/visual_artist/artworks'].values">
+          <a class="internal_link" ng-click="searchTopic(f.id)">{{f.text}}</a>
+        </li>
+      </ul>
+
     </div>
 
     <!-- /common/topic/social_media_presence -->
@@ -264,13 +247,12 @@
       <div class="panel-heading">
         <h3 class="panel-title">Social links</h3>
       </div>
-      <div class="panel-body">
-        <ul>
-          <li ng-repeat="f in details.property['/common/topic/social_media_presence'].values">
-            <a href="{{f.text}}">{{f.text}}</a>
-          </li>
-        </ul>
-      </div>
+      <ul class="panel-body">
+        <li ng-repeat="f in details.property['/common/topic/social_media_presence'].values">
+          <a href="{{f.text}}">{{f.text}}</a>
+        </li>
+      </ul>
+
     </div>
 
     <!-- /type/object/type -->
@@ -279,25 +261,25 @@
         <span style="font-size:0.75em;" ng-repeat="t in details.property['/type/object/type'].values"><a class="internal_link" ng-click="searchTopic(t.id)">{{t.text}}</a> /&nbsp;</span>
       </div>
     </div>
-
   </div>
 
   <div class="col-md-6">
 
-    <div class="panel panel-default" ng-hide="shares && shares.length>0">
+    <div class="panel panel-default" ng-hide="topicShares && topicShares.length>0">
       <div class="panel-body">
         No shares
       </div>
     </div>
 
-    <div class="panel panel-success" ng-show="shares && shares.length>0">
+    <div class="panel panel-success" ng-show="topicShares && topicShares.length>0">
       <div class="panel-heading">
         <h3 class="panel-title">Shares</h3>
       </div>
       <ul class="panel-body">
-        <li ng-repeat="s in shares"><b>{{s.author.name}}</b>, {{s.modificationDate | dateDelta}} ago: <i>{{s.content}}</i></li>
+        <li ng-repeat="s in topicShares"><b>{{s.author.name}}</b>, {{s.modificationDate | dateDelta}}: <i>{{s.content}}</i>
+        </li>
       </ul>
     </div>
-
   </div>
+
 </div>
