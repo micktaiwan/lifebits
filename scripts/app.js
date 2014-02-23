@@ -8,6 +8,7 @@ angular.module('lifebitsApp', [
     'google',
     'lifebitsApp.services.db',
     'lifebitsApp.services.history',
+    'lifebitsApp.filters.dateDelta',
 ])
     .config(function($routeProvider) {
         $routeProvider
