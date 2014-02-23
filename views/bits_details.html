@@ -295,7 +295,7 @@
         <h3 class="panel-title">Shares</h3>
       </div>
       <ul class="panel-body">
-        <li ng-repeat="s in shares">{{s.author.name}}: {{s.content}}</li>
+        <li ng-repeat="s in shares"><b>{{s.author.name}}</b>, {{s.modificationDate | dateDelta}} ago: <i>{{s.content}}</i></li>
       </ul>
     </div>
 
