@@ -28,7 +28,7 @@
     </div>
 
     <!-- Images -->
-    <div style="margin: 30px;" ng-show="details.property['/common/topic/image']">
+    <div style="margin: 30px;" ng-if="details.property['/common/topic/image']">
       <span ng-repeat="t in details.property['/common/topic/image'].values">
         <img style="margin:2px;border:1px #555 solid; padding:2px;" title="{{t.text}}" src="https://usercontent.googleapis.com/freebase/v1/image/{{t.id}}?maxwidth=200&maxheight=200">
       </span>
