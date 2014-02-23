@@ -5,11 +5,18 @@ angular.module('lifebitsApp')
 
     $rootScope.history = History.getItems();
 
+    function sortByDate(shares) {
+
+        return shares.sort(function(a,b) {
+            return a.modificationDate - b.modificationDate;
+        });
+    }
+
     // display
     if ($routeParams.topicId) {
       $rootScope.searchTopic('/' + $routeParams.topicId);
       Db.getShares('/'+$routeParams.topicId, function(shares){
-        $rootScope.shares = shares;
+        $rootScope.shares = sortByDate(shares);
       });
     }
 
