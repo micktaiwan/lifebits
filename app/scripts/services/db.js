@@ -14,13 +14,13 @@ angular.module('lifebitsApp.services.db', []).factory('Db', function($rootScope,
   };
 
   function toArray1(obj) {
-    var shares = [];
+    var rv = [];
     for (var id in obj) {
-      var share = obj[id];
-      share['id'] = id.replace(/\*/g, '/');
-      shares.push(share);
+      var o = obj[id];
+      o['id'] = id.replace(/\*/g, '/');
+      rv.push(o);
     }
-    return shares;
+    return rv;
   };
 
   function toArray2(obj) {
@@ -125,8 +125,17 @@ angular.module('lifebitsApp.services.db', []).factory('Db', function($rootScope,
           return;
         });
       });
-
     },
+
+    getLastUpdates: function(callbackSuccess) {
+      lastupdates_ref.once('value', function(snapshot) {
+        safeApply($rootScope, function() {
+          callbackSuccess(toArray1(snapshot.val()));
+          return;
+        });
+      });
+    },
+
     getUser: function() {
       return user;
     },
@@ -187,7 +196,7 @@ angular.module('lifebitsApp.services.db', []).factory('Db', function($rootScope,
         lastupdates_ref.child(lu_id).set({
           id: lu_id,
           date: date,
-          text: 'deleted share ' + s.val().title,
+          text: s.val().title,
           author: author,
           ref: "shares",
           action: "delete",

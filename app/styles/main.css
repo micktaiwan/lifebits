@@ -59,6 +59,16 @@
 .internal_link {
   cursor: help;
 }
+
+
+ul {
+  list-style-image:url('/lifebits/images/bullet.gif');
+  margin: 10px;
+  margin-left: 30px;
+  padding: 0px;
+}
+
+
 ul.history {
   margin: 0;
   margin-bottom: 20px;
@@ -91,11 +101,3 @@ ul.links li:after {
   content:" ";
 }
 
-ul.panel-body {
-  list-style-image:url('/images/bullet.gif');
-  margin: 10px;
-  margin-left: 30px;
-  padding: 0px;
-}
-.share {
-}
