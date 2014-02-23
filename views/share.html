@@ -10,7 +10,7 @@
 
 <form name="add_form" ng-submit="share(id, title, content, details.property['/common/topic/image'].values[0].id)" role="form">
     <div class="form-group">
-        <textarea class="form-control"  ng-model="content" placeholder="What's on your mind"></textarea><br/>
+        <textarea class="form-control"  ng-model="content" placeholder="What's on your mind">{{content}}</textarea><br/>
         <button type="submit" class="btn btn-success"><span class="glyphicon glyphicon-pencil"></span> Share</button>
     </div>
 </form>

@@ -9,7 +9,8 @@ angular.module('lifebitsApp', [
     'lifebitsApp.services.db',
     'lifebitsApp.services.history',
     'lifebitsApp.filters.dateDelta',
-])
+    'lifebitsApp.filters.partition',
+  ])
     .config(function($routeProvider) {
         $routeProvider
             .when('/main', {

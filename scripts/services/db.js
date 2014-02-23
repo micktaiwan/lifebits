@@ -35,8 +35,22 @@ angular.module('lifebitsApp.services.db', []).factory('Db', function($rootScope,
     return shares;
   };
 
-  function doGetShares(shares_ref, callbackSuccess, toArray) {
-    shares_ref.once('value', function(snapshot) {
+  function doGetShares(shares_ref, limit, callbackSuccess, toArray) {
+    var ref = shares_ref.startAt();
+    if (limit > 0)
+      ref = ref.limit(limit);
+
+    /*      ref.once('value', function(snapshot) {
+        snapshot.forEach(function(childSnap) {
+          console.log(childSnap.val());
+          childSnap.forEach(function(subChild) {
+            childSnap.ref().setPriority(-subChild.val().modificationDate);
+            //break;
+          });
+        });
+      });
+*/
+    ref.once('value', function(snapshot) {
       if (snapshot.val() !== null) {
         safeApply($rootScope, function() {
           callbackSuccess(toArray(snapshot.val()));
@@ -88,27 +102,42 @@ angular.module('lifebitsApp.services.db', []).factory('Db', function($rootScope,
       return u;
     },
 
-    getShares: function(topicId, callbackSuccess) {
+    getShares: function(topicId, limit, callbackSuccess) {
       console.log('getShares ' + topicId);
       if (topicId === null) {
-        doGetShares(shares_ref, callbackSuccess, toArray2);
+        doGetShares(shares_ref, limit, callbackSuccess, toArray2);
       } else {
         topicId = topicId.replace(/\//g, '*');
         var ref = new Firebase(CONFIG.firebaseUrl + '/shares/' + topicId);
-        doGetShares(ref, callbackSuccess, toArray1);
+        doGetShares(ref, limit, callbackSuccess, toArray1);
       }
 
     },
+    getShareContent: function(topicId, callbackSuccess) {
+      if (!user)
+        throw 'no user';
+      topicId = topicId.replace(/\//g, '*');
+      var content_ref = new Firebase(CONFIG.firebaseUrl + '/users/' + user.id + '/shares/*' + topicId + '/content');
+      console.log('getShareContent: ' + content_ref);
+      content_ref.once('value', function(snapshot) {
+        safeApply($rootScope, function() {
+          callbackSuccess(snapshot.val());
+          return;
+        });
+      });
 
+    },
     getUser: function() {
       return user;
     },
 
     addShare: function(freebase_id, title, content, image_id) {
-      if(!image_id) image_id = {};
+      if (!user)
+        throw 'no user';
+      if (!image_id) image_id = {};
       var sanitized_id = freebase_id.replace(/\//g, '*');
-      console.log('Db.addShare ' + sanitized_id + ", " + title + ", " + content);
       var date = (new Date()).getTime();
+      console.log('Db.addShare ' + sanitized_id + ", " + title + ", " + content + ', ' + (-date));
       if (!content) content = '';
       var author = {
         name: user.name,
@@ -122,6 +151,7 @@ angular.module('lifebitsApp.services.db', []).factory('Db', function($rootScope,
         author: author,
         image_id: image_id
       });
+      shares_ref.child(sanitized_id).setPriority(-date);
       users_ref.child(author.id).child('shares').child(sanitized_id).update({
         creationDate: date,
         modificationDate: date,
@@ -130,7 +160,7 @@ angular.module('lifebitsApp.services.db', []).factory('Db', function($rootScope,
         image_id: image_id
       });
       var lu_id = lastupdates_ref.push().name(); // generate a unique id based on timestamp
-      lastupdates_ref.child(lu_id).set({
+      lastupdates_ref.child(lu_id).setWithPriority({
         id: lu_id,
         date: date,
         text: title,
@@ -139,17 +169,19 @@ angular.module('lifebitsApp.services.db', []).factory('Db', function($rootScope,
         action: "add",
         object_id: sanitized_id,
         image_id: image_id
-      });
+      }, -date);
       return freebase_id;
     },
 
     deleteShare: function(id) {
+      console.log('deleting ' + id);
+      var topic_id = id.replace(/\//g, '*');
       var author = {
         id: user.id,
         name: user.name
       };
       var date = (new Date()).getTime();
-      var ref = shares_ref.child(id);
+      var ref = shares_ref.child(topic_id).child(user.id);
       ref.once('value', function(s) {
         var lu_id = lastupdates_ref.push().name(); // generate a unique id based on timestamp
         lastupdates_ref.child(lu_id).set({
@@ -159,10 +191,12 @@ angular.module('lifebitsApp.services.db', []).factory('Db', function($rootScope,
           author: author,
           ref: "shares",
           action: "delete",
-          object_id: id
+          object_id: topic_id
         });
-        shares_ref.child(id).remove();
+        ref.remove();
       });
+      var usershare_ref = new Firebase(CONFIG.firebaseUrl + '/users/' + user.id + '/shares/' + topic_id);
+      usershare_ref.remove();
     },
 
     getShareForUser: function(user_id, topic_id) {

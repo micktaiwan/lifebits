@@ -59,7 +59,7 @@ angular.module('lifebitsApp')
 
     function doSearch(id) {
       $rootScope.details = doSearchTopic(id);
-      Db.getShares(id, function(shares) {
+      Db.getShares(id, 0, function(shares) {
         $rootScope.topicShares = shares;
       });
       $rootScope.title = $rootScope.details.property['/type/object/name'].values[0].value;

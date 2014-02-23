@@ -3,15 +3,21 @@
 <!-- <button class="btn btn-default" ng-click="details=null" ng-show="details">Close topic</button> -->
 <div ng-include="'views/bits_details.html'" ng-show="details"></div>
 
-<div ng-repeat="s in shares">
-  <div class="panel panel-primary">
-    <div class="panel-body">
-      <a ng-if="s.image_id" href="#/bits/id{{s.id}}"><img style="float:left; margin-right: 20px;" src="https://usercontent.googleapis.com/freebase/v1/image/{{s.image_id}}?maxwidth=100&maxheight=100"></a>
-      <h2 class="panel-title">{{s.title}}</h2>
-      <i>{{s.content}}</i> -- {{s.author.name}} ({{s.modificationDate | dateDelta}})
-      <br/>
-      <a href="#/bits/id{{s.id}}">Show topic</div>
-    </div>
-  </div>
 
+<div ng-repeat="group in shares" class="row">
+  <div ng-repeat="s in group" class="col-md-4">
+
+    <div class="panel panel-primary">
+      <div class="panel-body">
+        <a ng-if="s.image_id" href="#/bits/id{{s.id}}">
+          <img style="float:left; margin-right: 20px;" src="https://usercontent.googleapis.com/freebase/v1/image/{{s.image_id}}?maxwidth=100&maxheight=100">
+        </a>
+        <h2 class="panel-title">{{s.title}}</h2>
+        <i>{{s.content}}</i> -- {{s.author.name}} ({{s.modificationDate | dateDelta}})
+        <br/>
+        <a href="#/bits/id{{s.id}}">Show topic</a>
+      </div>
+    </div>
+
+  </div>
 </div>

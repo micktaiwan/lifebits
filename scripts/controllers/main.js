@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('lifebitsApp')
-  .controller('MainCtrl', function($scope, $rootScope, Db) {
+  .controller('MainCtrl', function($scope, $rootScope, $filter, Db) {
 
     function sortByDate(shares) {
 
@@ -10,9 +10,9 @@ angular.module('lifebitsApp')
         });
     }
 
-    Db.getShares(null, function(shares) {
+    Db.getShares(null, 0, function(shares) {
       //console.log(shares);
-      $scope.shares = sortByDate(shares);
+      $scope.shares = $filter('partition')(shares, 2);
     });
 
     $rootScope.details = null;
