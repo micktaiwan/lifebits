@@ -13,8 +13,10 @@
         <div class="panel panel-primary">
           <div class="panel-heading">
             <h1 class="panel-title"><a href="#/bits/id{{s.id}}">{{s.title}}</a>
+              <span ng-show="s.notable_type">({{s.notable_type}})</span>
             </h1>
           </div>
+
           <div class="panel-body">
             <a ng-if="s.image_id" href="#/bits/id{{s.id}}">
               <img style="float:left; margin-right:20px;border:1px #555 solid; padding:2px;" src="https://usercontent.googleapis.com/freebase/v1/image/{{s.image_id}}?maxwidth=150&maxheight=200">

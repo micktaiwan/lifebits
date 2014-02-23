@@ -33,8 +33,8 @@ angular.module('lifebitsApp')
       });
     }
 
-    $scope.share = function(id, title, content, image_id) {
-      Db.addShare(id, title, content, image_id);
+    $scope.share = function(id, title, content, image_id, notable_type, notable_type_id) {
+      Db.addShare(id, title, content, image_id, notable_type, notable_type_id);
       $location.path('/bits/id' + id);
     }
     $scope.deleteShare = function(id) {

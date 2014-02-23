@@ -140,7 +140,7 @@ angular.module('lifebitsApp.services.db', []).factory('Db', function($rootScope,
       return user;
     },
 
-    addShare: function(freebase_id, title, content, image_id) {
+    addShare: function(freebase_id, title, content, image_id, notable_type, notable_type_id) {
       if (!user)
         throw 'no user';
       if (!image_id) image_id = {};
@@ -158,7 +158,9 @@ angular.module('lifebitsApp.services.db', []).factory('Db', function($rootScope,
         title: title,
         content: content,
         author: author,
-        image_id: image_id
+        image_id: image_id,
+        notable_type: notable_type,
+        notable_type_id: notable_type_id
       });
       shares_ref.child(sanitized_id).setPriority(-date);
       users_ref.child(author.id).child('shares').child(sanitized_id).update({
@@ -166,7 +168,9 @@ angular.module('lifebitsApp.services.db', []).factory('Db', function($rootScope,
         modificationDate: date,
         title: title,
         content: content,
-        image_id: image_id
+        image_id: image_id,
+        notable_type: notable_type,
+        notable_type_id: notable_type_id
       });
       var lu_id = lastupdates_ref.push().name(); // generate a unique id based on timestamp
       lastupdates_ref.child(lu_id).setWithPriority({
