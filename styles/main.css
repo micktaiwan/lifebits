@@ -74,6 +74,23 @@ ul.history li:before {
 ul.history li:after {
   content:" ";
 }
+
+ul.links {
+  margin: 0;
+  margin-bottom: 20px;
+  padding: 0;
+}
+ul.links li {
+  display: inline;
+}
+ul.links li:before {
+  content:"> ";
+  color: #55A;
+}
+ul.links li:after {
+  content:" ";
+}
+
 ul.panel-body {
   list-style-image:url('/images/bullet.gif');
   margin: 10px;

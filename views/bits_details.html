@@ -1,5 +1,10 @@
-<p><a href="#/bits/id{{details.id}}">Permanent link</a>
-</p>
+<ul class="links">
+  <li><a href="#/bits/id{{details.id}}">Permanent link</a>
+  </li>
+  <li><a href="https://www.freebase.com{{details.id}}">Freebase</a>
+  </li>
+</ul>
+
 
 <!-- Buttons -->
 <div style="margin-bottom: 10px;" ng-show="user">
@@ -239,8 +244,44 @@
           <a class="internal_link" ng-click="searchTopic(f.id)">{{f.text}}</a>
         </li>
       </ul>
-
     </div>
+
+    <!-- /influence/influence_node/peers -->
+    <div class="panel panel-default" ng-show="details.property['/influence/influence_node/peers']">
+      <div class="panel-heading">
+        <h3 class="panel-title">Peers</h3>
+      </div>
+      <ul class="panel-body">
+        <li ng-repeat="f in details.property['/influence/influence_node/peers'].values">
+          <a class="internal_link" ng-click="searchTopic(f.id)">{{f.text}}</a>
+        </li>
+      </ul>
+    </div>
+
+    <!-- /influence/influence_node/influenced_by -->
+    <div class="panel panel-default" ng-show="details.property['/influence/influence_node/influenced_by']">
+      <div class="panel-heading">
+        <h3 class="panel-title">Influenced by</h3>
+      </div>
+      <ul class="panel-body">
+        <li ng-repeat="f in details.property['/influence/influence_node/influenced_by'].values">
+          <a class="internal_link" ng-click="searchTopic(f.id)">{{f.text}}</a>
+        </li>
+      </ul>
+    </div>
+
+    <!-- /influence/influence_node/influenced -->
+    <div class="panel panel-default" ng-show="details.property['/influence/influence_node/influenced']">
+      <div class="panel-heading">
+        <h3 class="panel-title">Influenced</h3>
+      </div>
+      <ul class="panel-body">
+        <li ng-repeat="f in details.property['/influence/influence_node/influenced'].values">
+          <a class="internal_link" ng-click="searchTopic(f.id)">{{f.text}}</a>
+        </li>
+      </ul>
+    </div>
+
 
     <!-- /common/topic/social_media_presence -->
     <div class="panel panel-default" ng-show="details.property['/common/topic/social_media_presence']">
