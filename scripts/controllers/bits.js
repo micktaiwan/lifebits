@@ -4,6 +4,7 @@ angular.module('lifebitsApp')
   .controller('BitsCtrl', function($scope, $rootScope, $location, $routeParams, Google, Db, History) {
 
     $rootScope.history = History.getItems();
+    $rootScope.details = null;
 
     function sortByDate(shares) {
       return shares.sort(function(a, b) {

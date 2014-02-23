@@ -3,21 +3,41 @@
 <!-- <button class="btn btn-default" ng-click="details=null" ng-show="details">Close topic</button> -->
 <div ng-include="'views/bits_details.html'" ng-show="details"></div>
 
+<div class="row">
 
-<div ng-repeat="group in shares" class="row">
-  <div ng-repeat="s in group" class="col-md-4">
+  <div class="col-md-9">
 
-    <div class="panel panel-primary">
-      <div class="panel-body">
-        <a ng-if="s.image_id" href="#/bits/id{{s.id}}">
-          <img style="float:left; margin-right: 20px;" src="https://usercontent.googleapis.com/freebase/v1/image/{{s.image_id}}?maxwidth=100&maxheight=100">
-        </a>
-        <h2 class="panel-title">{{s.title}}</h2>
-        <i>{{s.content}}</i> -- {{s.author.name}} ({{s.modificationDate | dateDelta}})
-        <br/>
-        <a href="#/bits/id{{s.id}}">Show topic</a>
+    <div ng-repeat="group in shares" class="row">
+      <div ng-repeat="s in group" class="col-md-6">
+
+        <div class="panel panel-primary">
+          <div class="panel-heading">
+            <h1 class="panel-title"><a href="#/bits/id{{s.id}}">{{s.title}}</a>
+            </h1>
+          </div>
+          <div class="panel-body">
+            <a ng-if="s.image_id" href="#/bits/id{{s.id}}">
+              <img style="float:left; margin-right:20px;border:1px #555 solid; padding:2px;" src="https://usercontent.googleapis.com/freebase/v1/image/{{s.image_id}}?maxwidth=150&maxheight=200">
+            </a>
+            <div style="margin-bottom: 10px; font-style:italic;">
+              "{{s.content}}"
+            </div>
+            <div style="color:#666;">
+              {{s.author.name}}
+            </div>
+          </div>
+        </div>
+
       </div>
     </div>
+
+  </div>
+
+  <div class="col-md-3">
+    Last shares:
+    <ul>
+      <li ng-repeat="l in lastupdates track by $index"><a href="#/bits/id{{l.link}}">{{l.text}}</a> {{l.date | dateDelta}}</li>
+    </ul>
 
   </div>
 </div>
