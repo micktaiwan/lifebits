@@ -1,12 +1,17 @@
-<p><a href="#/bits/id{{details.id}}">Permanent link</a>
-</p>
+<ul class="links">
+  <li><a href="#/bits/id{{details.id}}">Permanent link</a>
+  </li>
+  <li><a href="https://www.freebase.com{{details.id}}">Freebase</a>
+  </li>
+</ul>
+
 
 <!-- Buttons -->
 <div style="margin-bottom: 10px;" ng-show="user">
-  <button class="btn btn-info" ng-click="bookmark(details.id)">
+  <!--   <button class="btn btn-info" ng-click="bookmark(details.id)">
     <span class="glyphicon glyphicon-star"></span>
     Bookmark
-  </button>
+  </button> -->
   <a class="btn btn-success" href="#/bits/share{{details.id}}">
     <span class="glyphicon glyphicon-pencil"></span>
     Share
@@ -30,7 +35,8 @@
     <!-- Images -->
     <div style="margin: 30px;text-align:center;" ng-if="details.property['/common/topic/image']">
       <span ng-repeat="t in details.property['/common/topic/image'].values">
-        <img style="margin:2px;border:1px #555 solid; padding:2px;" title="{{t.text}}" src="https://usercontent.googleapis.com/freebase/v1/image/{{t.id}}?maxwidth=300&maxheight=300">
+        <a target="_blank" href="https://usercontent.googleapis.com/freebase/v1/image/{{t.id}}?maxwidth=3000&maxheight=3000">
+          <img style="margin:2px;border:1px #555 solid; padding:2px;" title="{{t.text}}" src="https://usercontent.googleapis.com/freebase/v1/image/{{t.id}}?maxwidth=200&maxheight=200"></a>
       </span>
       <!-- &mode=fillcropmid -->
     </div>
@@ -239,8 +245,44 @@
           <a class="internal_link" ng-click="searchTopic(f.id)">{{f.text}}</a>
         </li>
       </ul>
-
     </div>
+
+    <!-- /influence/influence_node/peers -->
+    <div class="panel panel-default" ng-show="details.property['/influence/influence_node/peers']">
+      <div class="panel-heading">
+        <h3 class="panel-title">Peers</h3>
+      </div>
+      <ul class="panel-body">
+        <li ng-repeat="f in details.property['/influence/influence_node/peers'].values">
+          <a class="internal_link" ng-click="searchTopic(f.id)">{{f.text}}</a>
+        </li>
+      </ul>
+    </div>
+
+    <!-- /influence/influence_node/influenced_by -->
+    <div class="panel panel-default" ng-show="details.property['/influence/influence_node/influenced_by']">
+      <div class="panel-heading">
+        <h3 class="panel-title">Influenced by</h3>
+      </div>
+      <ul class="panel-body">
+        <li ng-repeat="f in details.property['/influence/influence_node/influenced_by'].values">
+          <a class="internal_link" ng-click="searchTopic(f.id)">{{f.text}}</a>
+        </li>
+      </ul>
+    </div>
+
+    <!-- /influence/influence_node/influenced -->
+    <div class="panel panel-default" ng-show="details.property['/influence/influence_node/influenced']">
+      <div class="panel-heading">
+        <h3 class="panel-title">Influenced</h3>
+      </div>
+      <ul class="panel-body">
+        <li ng-repeat="f in details.property['/influence/influence_node/influenced'].values">
+          <a class="internal_link" ng-click="searchTopic(f.id)">{{f.text}}</a>
+        </li>
+      </ul>
+    </div>
+
 
     <!-- /common/topic/social_media_presence -->
     <div class="panel panel-default" ng-show="details.property['/common/topic/social_media_presence']">
@@ -276,7 +318,12 @@
         <h3 class="panel-title">Shares</h3>
       </div>
       <ul class="panel-body">
-        <li ng-repeat="s in topicShares"><b>{{s.author.name}}</b>, {{s.modificationDate | dateDelta}}: <i>{{s.content}}</i>
+        <li ng-repeat="s in topicShares">
+          <b>{{s.author.name}}</b>, {{s.modificationDate | dateDelta}}: <i>{{s.content}}</i>
+          <button class="btn btn-danger btn-sm" ng-click="deleteShare(details.id)" ng-show="user && user.id==s.author.id">
+            <span class="glyphicon glyphicon-trash"></span>
+            Delete
+          </button>
         </li>
       </ul>
     </div>
