@@ -114,6 +114,19 @@
       </ul>
     </div>
 
+    <!-- /film/film_subject/films -->
+    <div class="panel panel-default" ng-show="details.property['/film/film_subject/films']">
+      <div class="panel-heading">
+        <h3 class="panel-title">Films on this subject</h3>
+      </div>
+      <ul class="panel-body">
+        <li ng-repeat="f in details.property['/film/film_subject/films'].values">
+          <a class="internal_link" ng-click="searchTopic(f.id)">{{f.text}}</a>
+        </li>
+      </ul>
+    </div>
+
+
     <!-- /common/topic/official_website -->
     <div class="panel panel-default" ng-show="details.property['/common/topic/official_website']">
       <div class="panel-heading">
