@@ -44,7 +44,7 @@ angular.module('lifebitsApp')
       return rv;
     }
 
-    Db.getShares(null, 9, function(shares) {
+    Db.getShares(null, 15, function(shares) {
       //console.log(shares);
       shares = shares.filter(function(i) {
         return i.image_id != null;

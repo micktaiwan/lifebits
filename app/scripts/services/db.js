@@ -144,6 +144,8 @@ angular.module('lifebitsApp.services.db', []).factory('Db', function($rootScope,
       if (!user)
         throw 'no user';
       if (!image_id) image_id = {};
+      if (!notable_type) notable_type = {};
+      if (!notable_type_id) notable_type_id = {};
       var sanitized_id = freebase_id.replace(/\//g, '*');
       var date = (new Date()).getTime();
       console.log('Db.addShare ' + sanitized_id + ", " + title + ", " + content + ', ' + (-date));
