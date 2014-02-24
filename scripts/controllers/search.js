@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('lifebitsApp')
-  .controller('SearchCtrl', function($scope, $rootScope, Google, Db, History) {
+  .controller('SearchCtrl', function($scope, $rootScope, Google, Db, History, Feed) {
 
     $rootScope.history = History.getItems();
 
@@ -64,8 +64,13 @@ angular.module('lifebitsApp')
       });
       $rootScope.title = $rootScope.details.property['/type/object/name'].values[0].value;
       $rootScope.id = id;
+
       History.add(id, $rootScope.title);
       $rootScope.history = History.getItems();
+      Feed.loadFeed($rootScope.title, function(data) {
+        $scope.feeds = data;
+      });
+
     }
 
     $rootScope.searchTopic = function(id) {
