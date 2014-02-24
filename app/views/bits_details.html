@@ -47,6 +47,22 @@
       <!-- &mode=fillcropmid -->
     </div>
 
+    <!-- /common/topic/subjects -->
+    <div class="panel panel-default" ng-show="details.property['/common/topic/subjects'] || details.property['/common/topic/subject_of']">
+      <div class="panel-heading">
+        <h3 class="panel-title">Related subjects</h3>
+      </div>
+      <ul class="panel-body">
+        <li ng-repeat="f in details.property['/common/topic/subjects'].values">
+          <a class="internal_link" ng-click="searchTopic(f.id)">{{f.text}}</a>
+        </li>
+        <li ng-repeat="f in details.property['/common/topic/subject_of'].values">
+          Subject of <a class="internal_link" ng-click="searchTopic(f.id)">{{f.text}}</a>
+        </li>
+      </ul>
+    </div>
+
+
     <!-- /people/person/profession -->
     <div class="panel panel-default" ng-show="details.property['/people/person/profession']">
       <div class="panel-heading">

@@ -19,7 +19,11 @@ angular.module('lifebitsApp.services.feed', []).factory('Feed',
         console.log('loading feed for ' + search);
         parseFeed(googleNewsUrl + search).then(function(res) {
           safeApply($rootScope, function() {
-            callback(res.data.responseData.feed.entries);
+            if (!res.data.responseData) {
+              callback([]);
+            } else {
+              callback(res.data.responseData.feed.entries);
+            }
           });
         });
       }
