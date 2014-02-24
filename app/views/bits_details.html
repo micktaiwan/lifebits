@@ -361,15 +361,16 @@
 
     <div class="panel panel-default" data-ng-controller="FeedCtrl">
       <div class="panel-heading">
-        <h3 class="panel-title">News <span class="badge badge-warning" ng-show="feeds.length > 0">{{(feeds | filter:filterText).length}} items</span></h3>
+        <h3 class="panel-title">News
+          <span class="badge badge-warning" ng-show="feeds.length > 0">{{(feeds | filter:filterText).length}} items</span>
+        </h3>
       </div>
       <div class="panel-body">
         <ul>
           <li ng-repeat="feed in feeds | filter:filterText">
             <h5><a href="{{feed.link}}">{{feed.title}}</a>
+              <small>{{feed.publishedDate}}</small>
             </h5>
-            <p class="text-left">{{feed.contentSnippet}}</p>
-            <span class="small">{{feed.publishedDate}}</span>
           </li>
         </ul>
       </div>
