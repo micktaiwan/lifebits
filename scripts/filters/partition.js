@@ -1,3 +1,5 @@
+'use strict';
+
 angular.module('lifebitsApp.filters.partition', []).filter('partition', function() {
     return function(items, nb) {
         if (items) {
@@ -8,7 +10,7 @@ angular.module('lifebitsApp.filters.partition', []).filter('partition', function
                     thisGroup = [];
                 }
                 thisGroup.push(items[i]);
-                if (((i+1) % nb) == 0) {
+                if (((i+1) % nb) === 0) {
                     finalItems.push(thisGroup);
                     thisGroup = null;
                 }

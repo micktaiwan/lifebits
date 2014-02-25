@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('hotreminderApp.services.notification', []).factory('Notification', function($rootScope){
+angular.module('hotreminderApp.services.notification', []).factory('Notification', function(){
 
   return {
 
@@ -16,7 +16,7 @@ angular.module('hotreminderApp.services.notification', []).factory('Notification
       },
 
       enableNotifications : function(){
-          if (webkitNotifications.checkPermission() != 0) {
+          if (webkitNotifications.checkPermission() !== 0) {
               webkitNotifications.requestPermission();
           }
       },
@@ -28,6 +28,6 @@ angular.module('hotreminderApp.services.notification', []).factory('Notification
               text
           ).show();
       }
-  }
+  };
 
 });

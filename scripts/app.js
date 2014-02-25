@@ -9,6 +9,7 @@ angular.module('lifebitsApp', [
   'lifebitsApp.services.db',
   'lifebitsApp.services.history',
   'lifebitsApp.services.feed',
+  'lifebitsApp.services.freebase',
   'lifebitsApp.filters.dateDelta',
   'lifebitsApp.filters.partition',
 ])

@@ -4,7 +4,7 @@ angular.module('lifebitsApp.services.db', []).factory('Db', function($rootScope,
 
   var user;
 
-  var shares = [];
+  //var shares = [];
   var shares_ref = new Firebase(CONFIG.firebaseUrl + '/shares');
   var users_ref = new Firebase(CONFIG.firebaseUrl + '/users');
   var lastupdates_ref = new Firebase(CONFIG.firebaseUrl + '/lastupdates');
@@ -12,34 +12,35 @@ angular.module('lifebitsApp.services.db', []).factory('Db', function($rootScope,
 
   function safeApply(scope, fn) {
     (scope.$$phase || scope.$root.$$phase) ? fn() : scope.$apply(fn);
-  };
+  }
 
   function toArray1(obj) {
     var rv = [];
     for (var id in obj) {
       var o = obj[id];
-      o['id'] = id.replace(/\*/g, '/');
+      o.id = id.replace(/\*/g, '/');
       rv.push(o);
     }
     return rv;
-  };
+  }
 
   function toArray2(obj) {
     var shares = [];
     for (var topic_id in obj) {
       for (var prop_id in obj[topic_id]) {
         var share = obj[topic_id][prop_id];
-        share['id'] = topic_id.replace(/\*/g, '/');
+        share.id = topic_id.replace(/\*/g, '/');
         shares.push(share);
       }
     }
     return shares;
-  };
+  }
 
   function doGetShares(shares_ref, limit, callbackSuccess, toArray) {
     var ref = shares_ref.startAt();
-    if (limit > 0)
+    if (limit > 0) {
       ref = ref.limit(limit);
+    }
 
     /*      ref.once('value', function(snapshot) {
         snapshot.forEach(function(childSnap) {
@@ -50,7 +51,7 @@ angular.module('lifebitsApp.services.db', []).factory('Db', function($rootScope,
           });
         });
       });
-*/
+    */
     ref.once('value', function(snapshot) {
       if (snapshot.val() !== null) {
         safeApply($rootScope, function() {
@@ -65,10 +66,26 @@ angular.module('lifebitsApp.services.db', []).factory('Db', function($rootScope,
         });
       }
     });
-  };
-
+  }
 
   return {
+
+    setShareCategory: function(sid, notable_type, notable_type_id) {
+      var sanitized_id = sid.replace(/\//g, '*');
+      shares_ref.child(sanitized_id).once('value', function(snapshot) {
+        var val = snapshot.val();
+        for (var prop in val) {
+          shares_ref.child(sanitized_id).child(prop).update({
+            notable_type: notable_type,
+            notable_type_id: notable_type_id
+          });
+          users_ref.child(prop).child('shares').child(sanitized_id).update({
+            notable_type: notable_type,
+            notable_type_id: notable_type_id
+          });
+        }
+      });
+    },
 
     setUser: function(u) {
       user = u;
@@ -90,8 +107,8 @@ angular.module('lifebitsApp.services.db', []).factory('Db', function($rootScope,
             id: lu_id,
             date: date,
             text: u.name,
-            ref: "users",
-            action: "add",
+            ref: 'users',
+            action: 'add',
             object_id: u.id
           });
         } else {
@@ -112,11 +129,12 @@ angular.module('lifebitsApp.services.db', []).factory('Db', function($rootScope,
         var ref = new Firebase(CONFIG.firebaseUrl + '/shares/' + topicId);
         doGetShares(ref, limit, callbackSuccess, toArray1);
       }
-
     },
+
     getShareContent: function(topicId, callbackSuccess) {
-      if (!user)
+      if (!user) {
         throw 'no user';
+      }
       topicId = topicId.replace(/\//g, '*');
       var content_ref = new Firebase(CONFIG.firebaseUrl + '/users/' + user.id + '/shares/*' + topicId + '/content');
       console.log('getShareContent: ' + content_ref);
@@ -142,15 +160,24 @@ angular.module('lifebitsApp.services.db', []).factory('Db', function($rootScope,
     },
 
     addShare: function(freebase_id, title, content, image_id, notable_type, notable_type_id) {
-      if (!user)
+      if (!user) {
         throw 'no user';
-      if (!image_id) image_id = {};
-      if (!notable_type) notable_type = {};
-      if (!notable_type_id) notable_type_id = {};
+      }
+      if (!image_id) {
+        image_id = {};
+      }
+      if (!notable_type) {
+        notable_type = {};
+      }
+      if (!notable_type_id) {
+        notable_type_id = {};
+      }
       var sanitized_id = freebase_id.replace(/\//g, '*');
       var date = (new Date()).getTime();
-      console.log('Db.addShare ' + sanitized_id + ", " + title + ", " + content + ', ' + (-date));
-      if (!content) content = '';
+      console.log('Db.addShare ' + sanitized_id + ', ' + title + ', ' + content + ', ' + (-date));
+      if (!content) {
+        content = '';
+      }
       var author = {
         name: user.name,
         id: user.id
@@ -181,8 +208,8 @@ angular.module('lifebitsApp.services.db', []).factory('Db', function($rootScope,
         date: date,
         text: title,
         author: author,
-        ref: "shares",
-        action: "add",
+        ref: 'shares',
+        action: 'add',
         object_id: sanitized_id,
         image_id: image_id
       }, -date);
@@ -205,8 +232,8 @@ angular.module('lifebitsApp.services.db', []).factory('Db', function($rootScope,
           date: date,
           text: s.val().title,
           author: author,
-          ref: "shares",
-          action: "delete",
+          ref: 'shares',
+          action: 'delete',
           object_id: topic_id
         });
         ref.remove();
@@ -215,13 +242,18 @@ angular.module('lifebitsApp.services.db', []).factory('Db', function($rootScope,
       usershare_ref.remove();
     },
 
+    /*
     getShareForUser: function(user_id, topic_id) {
 
     },
-
+*/
     logSearch: function(title, id) {
-      if (!title) title = {};
-      if (!id) id = {};
+      if (!title) {
+        title = {};
+      }
+      if (!id) {
+        id = {};
+      }
       var sanitized_id = id.replace(/\//g, '*');
       var date = (new Date()).getTime();
       var author = {};
@@ -234,8 +266,7 @@ angular.module('lifebitsApp.services.db', []).factory('Db', function($rootScope,
 
       var ref = searchlog_ref.child(sanitized_id);
       ref.once('value', function(s) {
-        // no log for this id
-        if (s.val() === null) {
+        if (s.val() === null) { // no log for this id
           searchlog_ref.child(sanitized_id).setWithPriority({
             title: title,
             id: sanitized_id,
@@ -256,12 +287,9 @@ angular.module('lifebitsApp.services.db', []).factory('Db', function($rootScope,
 
     },
 
-
-
-
     addComment: function(sid, text) {
       if (!sid) {
-        console.log("no share id");
+        console.log('no share id');
         return null;
       }
       var author = {
@@ -286,8 +314,8 @@ angular.module('lifebitsApp.services.db', []).factory('Db', function($rootScope,
           date: date,
           text: 'commented on ' + s.val().title,
           author: author,
-          ref: "comments",
-          action: "add",
+          ref: 'comments',
+          action: 'add',
           object_id: id,
           parent_id: sid
         });
@@ -309,8 +337,8 @@ angular.module('lifebitsApp.services.db', []).factory('Db', function($rootScope,
           date: date,
           text: 'deleted a comment on ' + s.val().title,
           author: author,
-          ref: "comments",
-          action: "delete",
+          ref: 'comments',
+          action: 'delete',
           object_id: cid,
           parent_id: sid
         });
