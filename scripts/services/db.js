@@ -244,6 +244,7 @@ angular.module('lifebitsApp.services.db', []).factory('Db', function($rootScope,
           }, -date);
         } else { // already searched before
           searchlog_ref.child(sanitized_id).update({
+            date: date,
             nb: s.val().nb + 1 // increment the nb
           });
         }
