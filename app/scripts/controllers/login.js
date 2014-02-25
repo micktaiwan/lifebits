@@ -14,7 +14,7 @@ angular.module('lifebitsApp')
         });
       },
       function() { // failure callback
-        console.log('error in Google login')
+        console.log('error in Google login');
       });
 
     $rootScope.user = Google.getUser();
@@ -25,6 +25,6 @@ angular.module('lifebitsApp')
       $rootScope.user = null;
       $location.path('/main');
       return;
-    }
+    };
 
   });

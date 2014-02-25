@@ -15,10 +15,11 @@ angular.module('lifebitsApp')
     // display
     if ($routeParams.topicId) {
       $rootScope.searchTopic('/' + $routeParams.topicId);
-/*      Db.getShares('/' + $routeParams.topicId, 0, function(shares) {
+      /*      Db.getShares('/' + $routeParams.topicId, 0, function(shares) {
         $rootScope.topicShares = sortByDate(shares);
       });
-*/    }
+*/
+    }
 
     // share
     if ($routeParams.shareId) {
@@ -36,12 +37,13 @@ angular.module('lifebitsApp')
     $scope.share = function(id, title, content, image_id, notable_type, notable_type_id) {
       Db.addShare(id, title, content, image_id, notable_type, notable_type_id);
       $location.path('/bits/id' + id);
-    }
+    };
+
     $scope.deleteShare = function(id) {
       Db.deleteShare(id);
       Db.getShares(id, 0, function(shares) {
         $rootScope.topicShares = sortByDate(shares);
       });
-    }
+    };
 
   });

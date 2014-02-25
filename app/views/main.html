@@ -3,6 +3,23 @@
 <!-- <button class="btn btn-default" ng-click="details=null" ng-show="details">Close topic</button> -->
 <div ng-include="'views/bits_details.html'" ng-show="details"></div>
 
+
+
+
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h1 class="panel-title">Shares categories {{selection}}</h1>
+  </div>
+  <div class="panel-body">
+    <div ng-repeat="groups in catGroups">
+      <label class="checkbox-inline col-md-3" ng-repeat="cat in groups">
+        <input type="checkbox" name="selectedCategories[]" value="{{cat.id}}" ng-model="cat.selected"><b>{{cat.label}}</b> ({{cat.nb}})
+      </label>
+    </div>
+  </div>
+</div>
+
+
 <div class="row">
 
   <div class="col-md-9">
@@ -14,6 +31,7 @@
           <div class="panel-heading">
             <h1 class="panel-title"><a href="#/bits/id{{s.id}}">{{s.title}}</a>
               <span ng-show="s.notable_type">({{s.notable_type}})</span>
+              <!-- <button class="btn btn-sm" ng-click="setShareCategory(s.id)">set cat</button> -->
             </h1>
           </div>
 
