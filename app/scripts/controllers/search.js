@@ -64,6 +64,7 @@ angular.module('lifebitsApp')
       });
       $rootScope.title = $rootScope.details.property['/type/object/name'].values[0].value;
       $rootScope.id = id;
+      Db.logSearch($rootScope.title, id);
 
       History.add(id, $rootScope.title);
       $rootScope.history = History.getItems();
