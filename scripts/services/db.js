@@ -8,6 +8,7 @@ angular.module('lifebitsApp.services.db', []).factory('Db', function($rootScope,
   var shares_ref = new Firebase(CONFIG.firebaseUrl + '/shares');
   var users_ref = new Firebase(CONFIG.firebaseUrl + '/users');
   var lastupdates_ref = new Firebase(CONFIG.firebaseUrl + '/lastupdates');
+  var searchlog_ref = new Firebase(CONFIG.firebaseUrl + '/searchlog');
 
   function safeApply(scope, fn) {
     (scope.$$phase || scope.$root.$$phase) ? fn() : scope.$apply(fn);
@@ -216,6 +217,27 @@ angular.module('lifebitsApp.services.db', []).factory('Db', function($rootScope,
 
     getShareForUser: function(user_id, topic_id) {
 
+    },
+
+    logSearch: function(title, id) {
+      if (!title) title = {};
+      if (!id) id = {};
+      var sanitized_id = id.replace(/\//g, '*');
+      var date = (new Date()).getTime();
+      var author = {};
+      if (user) {
+        author = {
+          name: user.name,
+          id: user.id
+        };
+      }
+      var log_id = searchlog_ref.push().name();
+      searchlog_ref.child(log_id).setWithPriority({
+        title: title,
+        id: sanitized_id,
+        author: author,
+        date: date,
+      }, -date);
     },
 
     addComment: function(sid, text) {
