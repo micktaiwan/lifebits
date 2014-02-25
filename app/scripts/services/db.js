@@ -231,14 +231,32 @@ angular.module('lifebitsApp.services.db', []).factory('Db', function($rootScope,
           id: user.id
         };
       }
-      var log_id = searchlog_ref.push().name();
-      searchlog_ref.child(log_id).setWithPriority({
-        title: title,
-        id: sanitized_id,
-        author: author,
-        date: date,
-      }, -date);
+
+      var ref = searchlog_ref.child(sanitized_id);
+      ref.once('value', function(s) {
+        // no log for this id
+        if (s.val() === null) {
+          searchlog_ref.child(sanitized_id).setWithPriority({
+            title: title,
+            id: sanitized_id,
+            date: date,
+            nb: 1
+          }, -date);
+        } else { // already searched before
+          searchlog_ref.child(sanitized_id).update({
+            nb: s.val().nb + 1 // increment the nb
+          });
+        }
+        // add the author
+        if (user) {
+          searchlog_ref.child(sanitized_id).child('authors').child(author.id).setWithPriority(author, -date);
+        }
+      });
+
     },
+
+
+
 
     addComment: function(sid, text) {
       if (!sid) {
