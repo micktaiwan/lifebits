@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('lifebitsApp')
-  .controller('LoginCtrl', function($rootScope, $location, Google, Db) {
+  .controller('LoginCtrl', function($rootScope, $location, $cookies, Google, Db) {
 
     Google.login(
       function() { // success callback
@@ -10,7 +10,13 @@ angular.module('lifebitsApp')
           //console.log(u);
           $rootScope.user = u;
           Db.setUser(u);
-        $location.path('/main');
+          if ($cookies.redirect) {
+            var path = $cookies.redirect;
+            $cookies.redirect = null;
+            $location.path(path);
+            return;
+          }
+          $location.path('/main');
         });
       },
       function() { // failure callback
