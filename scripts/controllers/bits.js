@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('lifebitsApp')
-  .controller('BitsCtrl', function($scope, $rootScope, $location, $routeParams, Google, Db, History) {
+  .controller('BitsCtrl', function($scope, $rootScope, $location, $routeParams, $cookies, Google, Db, History) {
 
     $rootScope.history = History.getItems();
     $rootScope.details = null;
@@ -25,6 +25,7 @@ angular.module('lifebitsApp')
     if ($routeParams.shareId) {
       var u = Google.getUser();
       if (!u || !u.id) {
+        $cookies.redirect = '/bits/share/'+$routeParams.shareId;
         $location.path('/login');
         return;
       }
@@ -33,6 +34,10 @@ angular.module('lifebitsApp')
         $scope.content = val;
       });
     }
+
+    $scope.cancelShare = function(id) {
+      $location.path('/bits/id' + id);
+    };
 
     $scope.share = function(id, title, content, image_id, notable_type, notable_type_id) {
       Db.addShare(id, title, content, image_id, notable_type, notable_type_id);
