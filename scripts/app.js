@@ -35,6 +35,10 @@ angular.module('lifebitsApp', [
         templateUrl: 'views/login.html',
         controller: 'LoginCtrl'
       })
+      .when('/logs', {
+        templateUrl: 'views/logs.html',
+        controller: 'LogsCtrl'
+      })
       .when('/:params', {
         redirectTo: '/login'
         /*

@@ -8,7 +8,7 @@ angular.module('lifebitsApp.services.db', []).factory('Db', function($rootScope,
   var shares_ref = new Firebase(CONFIG.firebaseUrl + '/shares');
   var users_ref = new Firebase(CONFIG.firebaseUrl + '/users');
   var lastupdates_ref = new Firebase(CONFIG.firebaseUrl + '/lastupdates');
-  var searchlog_ref = new Firebase(CONFIG.firebaseUrl + '/searchlog');
+  var logs_ref = new Firebase(CONFIG.firebaseUrl + '/searchlog');
 
   function safeApply(scope, fn) {
     (scope.$$phase || scope.$root.$$phase) ? fn() : scope.$apply(fn);
@@ -41,17 +41,6 @@ angular.module('lifebitsApp.services.db', []).factory('Db', function($rootScope,
     if (limit > 0) {
       ref = ref.limit(limit);
     }
-
-    /*      ref.once('value', function(snapshot) {
-        snapshot.forEach(function(childSnap) {
-          console.log(childSnap.val());
-          childSnap.forEach(function(subChild) {
-            childSnap.ref().setPriority(-subChild.val().modificationDate);
-            //break;
-          });
-        });
-      });
-    */
     ref.once('value', function(snapshot) {
       if (snapshot.val() !== null) {
         safeApply($rootScope, function() {
@@ -67,6 +56,30 @@ angular.module('lifebitsApp.services.db', []).factory('Db', function($rootScope,
       }
     });
   }
+
+  // TODO: c'est presque la même méthode que la précédente...
+  function doGetLogs(shares_ref, limit, callbackSuccess, toArray) {
+    var ref = logs_ref.startAt();
+    if (limit > 0) {
+      ref = ref.limit(limit);
+    }
+    ref.once('value', function(snapshot) {
+      if (snapshot.val() !== null) {
+        safeApply($rootScope, function() {
+          callbackSuccess(toArray(snapshot.val()));
+          return;
+        });
+      } else {
+        console.log('no values in DB');
+        safeApply($rootScope, function() {
+          callbackSuccess([]);
+          return;
+        });
+      }
+    });
+  }
+
+
 
   return {
 
@@ -128,6 +141,17 @@ angular.module('lifebitsApp.services.db', []).factory('Db', function($rootScope,
         topicId = topicId.replace(/\//g, '*');
         var ref = new Firebase(CONFIG.firebaseUrl + '/shares/' + topicId);
         doGetShares(ref, limit, callbackSuccess, toArray1);
+      }
+    },
+
+    getLogs: function(topicId, limit, callbackSuccess) {
+      console.log('getShares ' + topicId);
+      if (topicId === null) {
+        doGetLogs(logs_ref, limit, callbackSuccess, toArray1);
+      } else {
+        topicId = topicId.replace(/\//g, '*');
+        var ref = new Firebase(CONFIG.firebaseUrl + '/searchlogs/' + topicId);
+        doGetLogs(ref, limit, callbackSuccess, toArray1);
       }
     },
 
@@ -264,24 +288,25 @@ angular.module('lifebitsApp.services.db', []).factory('Db', function($rootScope,
         };
       }
 
-      var ref = searchlog_ref.child(sanitized_id);
+      var ref = logs_ref.child(sanitized_id);
       ref.once('value', function(s) {
         if (s.val() === null) { // no log for this id
-          searchlog_ref.child(sanitized_id).setWithPriority({
+          logs_ref.child(sanitized_id).setWithPriority({
             title: title,
             id: sanitized_id,
             date: date,
             nb: 1
           }, -date);
         } else { // already searched before
-          searchlog_ref.child(sanitized_id).update({
+          logs_ref.child(sanitized_id).update({
             date: date,
             nb: s.val().nb + 1 // increment the nb
           });
+          logs_ref.child(sanitized_id).setPriority(-date);
         }
         // add the author
         if (user) {
-          searchlog_ref.child(sanitized_id).child('authors').child(author.id).setWithPriority(author, -date);
+          logs_ref.child(sanitized_id).child('authors').child(author.id).setWithPriority(author, -date);
         }
       });
 

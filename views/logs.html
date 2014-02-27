@@ -1,0 +1,11 @@
+<button ng-click="filter()">Filter ({{limit}})</button>
+Last searches:
+<ol>
+  <li ng-repeat="l in logs track by $index">
+    <a href="#/bits/id{{l.id}}">{{l.title}}</a> x {{l.nb}} ({{l.date | dateDelta}})
+    <ul class="nospace">
+      <li ng-repeat="a in l.authors">{{a.name}}
+      </li>
+    </ul>
+  </li>
+</ol>
