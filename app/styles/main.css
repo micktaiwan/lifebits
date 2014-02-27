@@ -72,11 +72,21 @@ body {
   cursor: help;
 }
 
+
 ul {
   list-style-image:url('/lifebits/images/bullet.gif');
   margin: 10px;
   margin-left: 30px;
   padding: 0px;
+}
+
+ul.nospace {
+  margin: 0;
+  padding: 0;
+}
+
+ul.nospace li {
+  margin-left: 20px;
 }
 
 ul.history {
