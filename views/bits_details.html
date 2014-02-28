@@ -367,7 +367,7 @@
         </h3>
       </div>
       <div class="panel-body">
-        <input class="form-control input-sm" placeholder="filter" ng-model="filterShares">
+        <input class="form-control input-sm" placeholder="filter" ng-model="filterShares" ng-show="topicShares.length > 2">
         <ul>
 
           <li ng-repeat="s in (topicShares | filter:filterShares)">
@@ -378,6 +378,17 @@
             </button>
           </li>
         </ul>
+      </div>
+    </div>
+
+    <div class="sharing-buttons">
+      <div class="share-button"><a class="twitter" href="https://twitter.com/intent/tweet?url=http://micktaiwan.github.io/lifebits/%23/bits/id{{details.id}}&amp;text=Sharing {{details.property['/type/object/name'].values[0].value}}&amp;hashtags=lifebits" target="_blank"><i class="fa fa-twitter"></i> <span class="label">Tweet</span> </a>
+      </div>
+      <div class="share-button"><a class="facebook" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://micktaiwan.github.io/lifebits/%23/bits/id{{details.id}}"><i class="fa fa-facebook"></i> <span class="label">Share</span></a>
+      </div>
+      <div class="share-button"><a class="googleplus" target="_blank" href="https://plus.google.com/share?url=http://micktaiwan.github.io/lifebits/%23/bits/id{{details.id}}"><i class="fa fa-google-plus"></i> <span class="label">Share</span></a>
+      </div>
+      <div class="share-button"><a class="linkedin" target="_blank" href="http://www.linkedin.com/shareArticle?mini=true&amp;url=http://micktaiwan.github.io/lifebits/%23/bits/id{{details.id}}&amp;title={{details.property['/type/object/name'].values[0].value}}"><i class="fa fa-linkedin"></i> <span class="label">Share</span></a>
       </div>
     </div>
 

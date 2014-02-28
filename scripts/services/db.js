@@ -58,6 +58,7 @@ angular.module('lifebitsApp.services.db', []).factory('Db', function($rootScope,
   }
 
   // TODO: c'est presque la même méthode que la précédente...
+
   function doGetLogs(shares_ref, limit, callbackSuccess, toArray) {
     var ref = logs_ref.startAt();
     if (limit > 0) {
@@ -143,6 +144,29 @@ angular.module('lifebitsApp.services.db', []).factory('Db', function($rootScope,
         doGetShares(ref, limit, callbackSuccess, toArray1);
       }
     },
+
+    getUserShares: function(callbackSuccess) {
+      console.log('getUserShares');
+      if (!user) return;
+
+      var ref = users_ref.child(user.id).child('shares');
+      ref.once('value', function(snapshot) {
+        if (snapshot.val() !== null) {
+          safeApply($rootScope, function() {
+            callbackSuccess(toArray1(snapshot.val()));
+            return;
+          });
+        } else {
+          console.log('no values in DB');
+          safeApply($rootScope, function() {
+            callbackSuccess([]);
+            return;
+          });
+        }
+      });
+    },
+
+
 
     getLogs: function(topicId, limit, callbackSuccess) {
       console.log('getShares ' + topicId);

@@ -14,11 +14,8 @@ angular.module('lifebitsApp')
 
     // display
     if ($routeParams.topicId) {
+      $cookies.redirect = '/bits/id/'+$routeParams.topicId;
       $rootScope.searchTopic('/' + $routeParams.topicId);
-      /*      Db.getShares('/' + $routeParams.topicId, 0, function(shares) {
-        $rootScope.topicShares = sortByDate(shares);
-      });
-*/
     }
 
     // share

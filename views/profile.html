@@ -1,0 +1,62 @@
+<div ng-hide="length">Loading page...</div>
+
+<div ng-show="length">
+  {{user.name}}
+  <br/>{{length}} shares
+  <br/>
+</div>
+
+<div ng-repeat="group in shares" class="row">
+  <div ng-repeat="s in group" class="col-md-6">
+
+    <div class="panel panel-primary">
+      <div class="panel-heading">
+        <h1 class="panel-title"><a href="#/bits/id{{s.id}}">{{s.title}}</a>
+          <span ng-show="s.notable_type">({{s.notable_type}})</span>
+          <!-- <button class="btn btn-sm" ng-click="setShareCategory(s.id)">set cat</button> -->
+        </h1>
+      </div>
+
+      <div class="panel-body">
+
+        <div class="row">
+
+          <div class="col-md-4">
+            <a ng-if="s.image_id" href="#/bits/id{{s.id}}">
+              <img style="float:left; margin-right:20px;border:1px #555 solid; padding:2px;" src="https://usercontent.googleapis.com/freebase/v1/image/{{s.image_id}}?maxwidth=150&maxheight=200">
+            </a>
+            <div class="noimage">
+              <a ng-if="!s.image_id" href="#/bits/id{{s.id}}">
+              No image
+              </a>
+            </div>
+          </div>
+
+          <div class="col-md-8">
+            <div style="margin-bottom: 10px; font-style:italic;">
+              "{{s.content}}"
+            </div>
+
+            <div style="margin-top: 10px;">
+              Shared on {{s.creationDate | date}}
+            </div>
+
+            <div style="margin-top: 10px;">
+              <a class="btn btn-success" href="#/bits/share{{s.id}}">
+                <span class="glyphicon glyphicon-pencil"></span>
+                Edit
+              </a>
+              <button class="btn btn-danger" ng-click="deleteShare(details.id)">
+                <span class="glyphicon glyphicon-trash"></span>
+                Delete
+              </button>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</div>

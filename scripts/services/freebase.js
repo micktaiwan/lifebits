@@ -3,9 +3,7 @@
 angular.module('lifebitsApp.services.freebase', []).factory('Freebase', function() { //($rootScope, $location, CONFIG) {
 
   // TODO:
-  // 1. make a service
-  // 2 use $.ajax and asynchronous call
-  // 3. profit
+  // use $.ajax and asynchronous call
 
   var freebaseKey = 'AIzaSyDFVeNzDuEmGe7eZProsCUwxgthSfFU2Hs';
   var url = 'https://www.googleapis.com/freebase/v1';
