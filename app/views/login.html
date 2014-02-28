@@ -1,3 +1,9 @@
-<h1>Login</h1>
-<a href="{{authUrl}}"><img src="images/g-signin.png"></a><br/>
-This login uses your current domain google account.
+<div ng-show="loading">Loading login page...</div>
+
+<div ng-hide="loading">
+  <h1>Login</h1>
+  <a href="{{authUrl}}">
+    <img src="images/g-signin.png">
+  </a>
+  <br/>This login uses your current domain google account.
+</div>

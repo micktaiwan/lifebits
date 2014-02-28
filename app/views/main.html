@@ -1,12 +1,9 @@
 <div class="tagline">Le site qu'il est bien pour partager ce que tu as aimé avec qui tu aimes</div>
-
+<div ng-hide="shares && lastupdates">Loading shares...</div>
 <div ng-include="'views/history.html'"></div>
 
 <!-- <button class="btn btn-default" ng-click="details=null" ng-show="details">Close topic</button> -->
 <div ng-include="'views/bits_details.html'" ng-show="details"></div>
-
-
-
 
 <div class="panel panel-default">
   <div class="panel-heading">
@@ -20,7 +17,6 @@
     </div>
   </div>
 </div>
-
 
 <div class="row">
 
@@ -38,15 +34,41 @@
           </div>
 
           <div class="panel-body">
-            <a ng-if="s.image_id" href="#/bits/id{{s.id}}">
-              <img style="float:left; margin-right:20px;border:1px #555 solid; padding:2px;" src="https://usercontent.googleapis.com/freebase/v1/image/{{s.image_id}}?maxwidth=150&maxheight=200">
-            </a>
-            <div style="margin-bottom: 10px; font-style:italic;">
-              "{{s.content}}"
+
+            <div class="row">
+
+              <div class="col-md-6">
+                <a ng-if="s.image_id" href="#/bits/id{{s.id}}">
+                  <img style="float:left; margin-right:20px;border:1px #555 solid; padding:2px;" src="https://usercontent.googleapis.com/freebase/v1/image/{{s.image_id}}?maxwidth=150&maxheight=200">
+                </a>
+                <div class="noimage">
+                  <a ng-if="!s.image_id" href="#/bits/id{{s.id}}">
+                    No image
+                  </a>
+                </div>
+              </div>
+
+              <div class="col-md-6">
+
+                <div style="margin-bottom: 10px; font-style:italic;">
+                  "{{s.content}}"
+                </div>
+                <div style="color:#666;">
+                  {{s.author.name}}
+                </div>
+                <div style="margin-top: 10px;">
+                  <!--   <button class="btn btn-info" ng-click="bookmark(details.id)">
+                <span class="glyphicon glyphicon-star"></span>
+                Bookmark
+                </button> -->
+                  <a class="btn btn-success" href="#/bits/share{{s.id}}">
+                    <span class="glyphicon glyphicon-pencil"></span>
+                    Share
+                  </a>
+                </div>
+              </div>
             </div>
-            <div style="color:#666;">
-              {{s.author.name}}
-            </div>
+
           </div>
         </div>
 

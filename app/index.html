@@ -21,6 +21,7 @@
   <!-- build:css({.tmp,app}) styles/main.css -->
   <link rel="stylesheet" href="styles/main.css">
   <link type="text/css" rel="stylesheet" href="https://www.gstatic.com/freebase/suggest/4_2/suggest.min.css" />
+  <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
   <!-- endbuild -->
 </head>
 
@@ -83,11 +84,12 @@
         <img src="images/g-signin.png" />
       </a>
     </div>
-    <div class="navbar-text">{{user.name}}</div>
+    <div class="navbar-text"><a href="#/profile">{{user.name}}</a>
+    </div>
   </nav>
 
   <!-- Add your site or application content here -->
-  <div class="container" ng-view=""></div>
+  <div class="container" ng-view="">Loading page...</div>
 
   <div class="footer">
     <p></p>
@@ -144,6 +146,7 @@
   <script src="scripts/controllers/bits.js"></script>
   <script src="scripts/controllers/login.js"></script>
   <script src="scripts/controllers/feed.js"></script>
+  <script src="scripts/controllers/profile.js"></script>
   <script src="scripts/controllers/logs.js"></script>
   <script src="scripts/services/google.js"></script>
   <script src="scripts/services/db.js"></script>

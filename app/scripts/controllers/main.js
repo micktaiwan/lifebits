@@ -82,7 +82,7 @@ angular.module('lifebitsApp')
     }
 
     function homepageShares() {
-      // initialize page with last 15 shares at max with images
+      // initialize page with last shares at max with images
       var homepageShares = allShares.filter(function(i) {
         return i.image_id != null;
       });

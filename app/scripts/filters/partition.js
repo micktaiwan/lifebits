@@ -14,7 +14,7 @@ angular.module('lifebitsApp.filters.partition', []).filter('partition', function
                     finalItems.push(thisGroup);
                     thisGroup = null;
                 }
-            };
+            }
             if (thisGroup) {
                 finalItems.push(thisGroup);
             }

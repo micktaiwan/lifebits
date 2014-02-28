@@ -7,6 +7,11 @@ angular.module('lifebitsApp')
     var limit = 0;
     $scope.limit = limit;
 
+    Db.getLogs(null, 0, function(logs) {
+      allLogs = logs;
+      $scope.logs = logs;
+    });
+
 
     function doFilter() {
       if (allLogs == []) return;
@@ -22,10 +27,5 @@ angular.module('lifebitsApp')
       $scope.limit = limit;
       doFilter();
     };
-
-    Db.getLogs(null, 0, function(logs) {
-      allLogs = logs;
-      $scope.logs = logs;
-    });
 
   });

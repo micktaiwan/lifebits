@@ -1,11 +1,12 @@
 'use strict';
 
 angular.module('lifebitsApp')
-  .controller('LoginCtrl', function($rootScope, $location, $cookies, Google, Db) {
+  .controller('LoginCtrl', function($rootScope, $scope, $location, $cookies, Google, Db) {
 
     Google.login(
       function() { // success callback
         $rootScope.$apply(function() {
+          $scope.loading = true;
           var u = Google.getUser();
           //console.log(u);
           $rootScope.user = u;
@@ -20,11 +21,12 @@ angular.module('lifebitsApp')
         });
       },
       function() { // failure callback
-        console.log('error in Google login');
+        $rootScope.$apply(function() {
+          console.log('error in Google login');
+        });
       });
 
     $rootScope.user = Google.getUser();
-
 
     $rootScope.logout = function() {
       Google.logout();
@@ -33,4 +35,5 @@ angular.module('lifebitsApp')
       return;
     };
 
+    $scope.loading = false;
   });

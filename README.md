@@ -1,9 +1,11 @@
 Lifebits
 ========
 
-Lifebits, save and share your life bits
+"Save and share your life bits !""
 
-Technologies: AngularJS based on Freebase
+Lifebits is an interface to freebase with a goal in mind: share what you liked (movies, music, books, ...)
+
+Technologies: AngularJS (web framework), Freebase (data) and Firebase (DB)
 
 Demo
 ====
