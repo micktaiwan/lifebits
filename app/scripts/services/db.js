@@ -166,8 +166,6 @@ angular.module('lifebitsApp.services.db', []).factory('Db', function($rootScope,
       });
     },
 
-
-
     getLogs: function(topicId, limit, callbackSuccess) {
       console.log('getShares ' + topicId);
       if (topicId === null) {
@@ -250,6 +248,7 @@ angular.module('lifebitsApp.services.db', []).factory('Db', function($rootScope,
         notable_type: notable_type,
         notable_type_id: notable_type_id
       });
+      users_ref.child(author.id).child('shares').child(sanitized_id).setPriority(-date);
       var lu_id = lastupdates_ref.push().name(); // generate a unique id based on timestamp
       lastupdates_ref.child(lu_id).setWithPriority({
         id: lu_id,
