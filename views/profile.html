@@ -1,9 +1,7 @@
 <div ng-hide="length">Loading page...</div>
 
-<div ng-show="length">
-  {{user.name}}
-  <br/>{{length}} shares
-  <br/>
+<div ng-show="length" class="panel-body">
+  {{user.name}}'s profile. {{length}} shares.
 </div>
 
 <div ng-repeat="group in shares" class="row">

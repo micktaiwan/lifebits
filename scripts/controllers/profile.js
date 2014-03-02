@@ -10,10 +10,16 @@ angular.module('lifebitsApp')
       return;
     }
 
+    function sortByDate(shares) {
+      return shares.sort(function(a, b) {
+        return b.creationDate - a.creationDate;
+      });
+    }
+
     function getShares() {
       Db.getUserShares(function(shares) {
         $scope.length = shares.length;
-        $scope.shares = $filter('partition')(shares, 2);
+        $scope.shares = $filter('partition')(sortByDate(shares), 2);
       });
     }
 
