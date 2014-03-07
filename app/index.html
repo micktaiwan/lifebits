@@ -36,7 +36,15 @@
     </div>
     <div class="col-md-4">
       <form class="navbar-form form-inline" role="search">
-        <div class="input-group col-md-6 pull-left">
+        <button class="col-md-2 btn btn-default pull-left" ng-click="showFilter=!showFilter;search=''">Filter</button>
+        <div class="input-group col-md-4 pull-left" ng-show="showFilter">
+          <input id="searchType" ng-model="searchType" class="form-control" placeholder="Filter by..." />
+          <div class="input-group-btn">
+            <button class="btn btn-default" ng-click="setSuggestType(null)"><i class="glyphicon glyphicon-trash"></i>
+            </button>
+          </div>
+        </div>
+        <div class="input-group col-md-6">
           <input id="myinput" ng-model="search" class="form-control" placeholder="Search for something" />
           <!--
            <div class="input-group-btn">
@@ -44,13 +52,6 @@
             </button>
           </div>
           -->
-        </div>
-        <div class="input-group col-md-6">
-          <input id="searchType" ng-model="searchType" class="form-control" placeholder="Filter by category" />
-          <div class="input-group-btn">
-            <button class="btn btn-default" ng-click="setSuggestType(null)"><i class="glyphicon glyphicon-trash"></i>
-            </button>
-          </div>
         </div>
       </form>
     </div>

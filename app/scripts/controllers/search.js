@@ -69,6 +69,7 @@ angular.module('lifebitsApp')
         $scope.search = '';
       } else {
         options.filter = '(all type:' + type + ')';
+        $scope.search = '';
       }
       $('#myinput').suggest(options).bind('fb-select', function(e, data) {
         console.log(data);
