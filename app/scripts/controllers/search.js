@@ -3,6 +3,7 @@
 angular.module('lifebitsApp')
   .controller('SearchCtrl', function($scope, $rootScope, $location, Google, Db, History, Feed, Freebase) {
 
+    var searchType = '';
     $rootScope.history = History.getItems();
 
     Google.login(
@@ -19,6 +20,10 @@ angular.module('lifebitsApp')
       });
 
     $rootScope.user = Google.getUser();
+
+    $scope.isActive = function(viewLocation) {
+      return viewLocation === $location.path();
+    };
 
     function doSearch(id) {
       Freebase.searchTopic(id, function(result) {
@@ -43,7 +48,7 @@ angular.module('lifebitsApp')
       console.log(id);
       doSearch(id);
     };
-/*
+    /*
     $rootScope.bookmark = function(id) {
       var u = Google.getUser();
       if (!u || !u.id) {
@@ -53,14 +58,36 @@ angular.module('lifebitsApp')
       console.log('bookmarking ' + id);
     };
 */
-    $('#myinput').suggest({
-      //filter: '(all type:/film/director)'
-      'key': Freebase.getFreebaseKey()
+
+    $rootScope.setSuggestType = function(type) {
+      console.log('setting type: ' + $scope.searchType);
+      var options = {
+        'key': Freebase.getFreebaseKey()
+      }
+      if (type == null) {
+        $scope.searchType = '';
+        $scope.search = '';
+      } else {
+        options.filter = '(all type:' + type + ')';
+      }
+      $('#myinput').suggest(options).bind('fb-select', function(e, data) {
+        console.log(data);
+        $rootScope.$apply(function() {
+          doSearch(data.mid);
+        });
+      });
+    }
+
+    $('#searchType').suggest({
+      'key': Freebase.getFreebaseKey(),
+      'filter': '(all type:/type/type)'
     }).bind('fb-select', function(e, data) {
-      console.log(data);
       $rootScope.$apply(function() {
-        doSearch(data.mid);
+        console.log(data);
+        $rootScope.setSuggestType(data.mid);
       });
     });
+
+    $rootScope.setSuggestType(null);
 
   });
