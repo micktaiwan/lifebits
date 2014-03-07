@@ -25,60 +25,62 @@
   <!-- endbuild -->
 </head>
 
-<body ng-app="lifebitsApp" ng-controller="SearchCtrl">
+<body ng-app="lifebitsApp">
   <!--[if lt IE 7]>
       <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
     <![endif]-->
 
-  <nav class="navbar navbar-inverse" role="navigation" ng-controller="HeaderCtrl">
+  <nav class="navbar navbar-inverse" role="navigation" ng-controller="SearchCtrl">
     <div class="navbar-header">
       <a class="navbar-brand" href="#">Lifebits</a>
     </div>
-    <div>
-
-      <div class="col-md-3">
-        <form class="navbar-form" role="search">
-          <div class="input-group">
-            <input type="text" id="myinput" ng-model="search" class="form-control" placeholder="Search for something" />
-            <div class="input-group-btn">
-              <button class="btn btn-default" type="submit" ng-click="searchTopic(search)"><i class="glyphicon glyphicon-search"></i>
-              </button>
-            </div>
+    <div class="col-md-4">
+      <form class="navbar-form form-inline" role="search">
+        <div class="input-group col-md-6 pull-left">
+          <input id="myinput" ng-model="search" class="form-control" placeholder="Search for something" />
+          <!--
+           <div class="input-group-btn">
+            <button class="btn btn-default" ng-click="searchTopic(search)"><i class="glyphicon glyphicon-search"></i>
+            </button>
           </div>
-        </form>
-      </div>
+          -->
+        </div>
+        <div class="input-group col-md-6">
+          <input id="searchType" ng-model="searchType" class="form-control" placeholder="Filter by category" />
+          <div class="input-group-btn">
+            <button class="btn btn-default" ng-click="setSuggestType(null)"><i class="glyphicon glyphicon-trash"></i>
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
 
-
-      <ul class="nav navbar-nav">
-        <li><a href="#/profile">{{user.name}}
-                </li>
+    <ul class="nav navbar-nav">
+      <li><a href="#/profile">{{user.name}}</li>
         <!--
         <li ng-class="{ active: isActive('/main')}"><a href="#">Home</a>
-        </li>
-        <li ng-class="{ active: isActive('/bits')}"><a href="#/bits">Bits</a>
-        </li>
+      </li>
+      <li ng-class="{ active: isActive('/bits')}"><a href="#/bits">Bits</a>
+      </li>
+      <li class="dropdown">
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Java <b class="caret"></b></a>
+        <ul class="dropdown-menu">
+          <li><a href="#">jmeter</a>
+          </li>
+          <li><a href="#">EJB</a>
+          </li>
+          <li><a href="#">Jasper Report</a>
+          </li>
+          <li class="divider"></li>
+          <li><a href="#">Separated link</a>
+          </li>
+          <li class="divider"></li>
+          <li><a href="#">One more separated link</a>
+          </li>
+        </ul>
+      </li>-->
+    </ul>
 
-
-
-        <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown">Java <b class="caret"></b></a>
-          <ul class="dropdown-menu">
-            <li><a href="#">jmeter</a>
-            </li>
-            <li><a href="#">EJB</a>
-            </li>
-            <li><a href="#">Jasper Report</a>
-            </li>
-            <li class="divider"></li>
-            <li><a href="#">Separated link</a>
-            </li>
-            <li class="divider"></li>
-            <li><a href="#">One more separated link</a>
-            </li>
-          </ul>
-        </li>-->
-      </ul>
-    </div>
 
     <!-- Sign in -->
     <div class="navbar-header" ng-hide="user">
@@ -140,7 +142,6 @@
   <!-- build:js({.tmp,app}) scripts/scripts.js -->
   <script src="scripts/app.js"></script>
   <script src="scripts/env.js"></script>
-  <script src="scripts/controllers/header.js"></script>
   <script src="scripts/controllers/search.js"></script>
   <script src="scripts/controllers/main.js"></script>
   <script src="scripts/controllers/bits.js"></script>
