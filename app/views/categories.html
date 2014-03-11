@@ -1,0 +1,18 @@
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h1 class="panel-title">Shares categories {{selection}}</h1>
+  </div>
+  <div class="panel-body">
+    <div ng-repeat="groups in catGroups">
+      <label class="checkbox-inline col-md-3" ng-repeat="cat in groups">
+        <input type="checkbox" name="selectedCategories[]" value="{{cat.id}}" ng-model="cat.selected"><b>{{cat.label}}</b> ({{cat.nb}})
+      </label>
+    </div>
+  </div>
+</div>
+
+<!--
+<label class="checkbox-inline col-md-3" ng-repeat="cat in topCat">
+  <input type="checkbox" name="selectedCategories[]" value="{{cat.id}}" ng-model="cat.selected"><b>{{cat.label}}</b> ({{cat.nb}})
+</label>
+ -->

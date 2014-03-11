@@ -5,22 +5,8 @@
 <!-- <button class="btn btn-default" ng-click="details=null" ng-show="details">Close topic</button> -->
 <div ng-include="'views/bits_details.html'" ng-show="details"></div>
 
+<div categories/>
 
-<div categories></div>
-
-
-<div class="panel panel-default">
-  <div class="panel-heading">
-    <h1 class="panel-title">Shares categories {{selection}}</h1>
-  </div>
-  <div class="panel-body">
-    <div ng-repeat="groups in catGroups">
-      <label class="checkbox-inline col-md-3" ng-repeat="cat in groups">
-        <input type="checkbox" name="selectedCategories[]" value="{{cat.id}}" ng-model="cat.selected"><b>{{cat.label}}</b> ({{cat.nb}})
-      </label>
-    </div>
-  </div>
-</div>
 
 <div class="row">
 
@@ -82,10 +68,10 @@
   </div>
 
   <div class="col-md-3">
-    Last shares:
-    <ul>
-      <li ng-repeat="l in lastupdates track by $index"><a href="#/bits/id{{l.link}}">{{l.text}}</a> {{l.date | dateDelta}}</li>
-    </ul>
+    50 last shares:
+    <ol>
+      <li ng-repeat="l in lastupdates track by $index"><a href="#/bits/id{{l.link}}">{{l.title}}</a> {{l.creationDate | dateDelta}}</li>
+    </ol>
 
   </div>
 </div>
