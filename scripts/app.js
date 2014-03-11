@@ -50,3 +50,15 @@ angular.module('lifebitsApp', [
         redirectTo: '/main'
       });
   });
+
+function myfind(list, value, property) {
+  for (var i in list) {
+    if (property) {
+      //if (!list[i][property]) throw list[i] + ' has no property ' + property;
+      if (list[i][property] === value) return i;
+    } else {
+      if (list[i] === value) return i;
+    }
+  }
+  return -1;
+}
