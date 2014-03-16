@@ -74,7 +74,7 @@ angular.module('lifebitsApp')
       $('#myinput').suggest(options).bind('fb-select', function(e, data) {
         console.log(data);
         $rootScope.$apply(function() {
-          doSearch(data.mid);
+          $location.path('/bits/id'+data.mid);
         });
       });
     }
